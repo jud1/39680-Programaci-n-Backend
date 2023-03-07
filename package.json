@@ -1,0 +1,32 @@
+{
+  "name": "backend-coderhouse",
+  "version": "1.0.0",
+  "description": "Desde primera practica integradora en adelante",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jud1/backend-39680-jose-ulloa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jud1/backend-39680-jose-ulloa/issues"
+  },
+  "homepage": "https://github.com/jud1/backend-39680-jose-ulloa#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.1",
+    "mongoose": "^7.0.1",
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
