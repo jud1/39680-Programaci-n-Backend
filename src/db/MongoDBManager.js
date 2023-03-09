@@ -1,16 +1,18 @@
 import mongoose from "mongoose"
 
 export class MongoDBManager {
+
+   #url
    constructor(url, collection, schema) {
-      this.url = url // Esta propiedad deberia ser privada
+      this.#url = url // Esta propiedad deberia ser privada
       this.collection = collection
       this.schema = new mongoose.Schema(schema)
       this.model = mongoose.model(this.collection, this.schema)
    }
 
-   setConnection = async () => { // Arrow function
+   #setConnection = async () => { // Arrow function
       try {
-         await mongoose.connect(this.url)
+         await mongoose.connect(this.#url)
          console.log('MongoDB is conected')
       }
       catch (error){
@@ -18,7 +20,9 @@ export class MongoDBManager {
       }
    }
 
-   async getElements() {
+   // Arrow function
+   getElements = async () => {
+      this.#setConnection
       try {
          const elements = await this.model.find()
          return elements
@@ -28,7 +32,8 @@ export class MongoDBManager {
       }
    }
 
-   async getElementsById(id) {
+   getElementsById = async id => {
+      this.#setConnection
       try {
          const element = await this.model.findById(id)
          return element
@@ -39,6 +44,7 @@ export class MongoDBManager {
    }
    
    async addElements(elements) { // Agrega uno o varios elementos
+      this.#setConnection
       try {
          const message = await this.model.insertMany(elements)
          return message
@@ -49,6 +55,7 @@ export class MongoDBManager {
    }
 
    async updateElement(id, info) {
+      this.#setConnection
       try {
          const message = await this.model.findByIdAndUpdate(id, info)
          return message
@@ -59,6 +66,7 @@ export class MongoDBManager {
    }
    
    async deleteElement(id) {
+      this.#setConnection
       try {
          const response = await this.model.findByIdAndRemove(id)
          return response

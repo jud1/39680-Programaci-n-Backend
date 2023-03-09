@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Desde primera practica integradora en adelante",
   "main": "index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "start": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/jud1/backend-39680-jose-ulloa#readme",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-handlebars": "^7.0.1",
     "mongoose": "^7.0.1",

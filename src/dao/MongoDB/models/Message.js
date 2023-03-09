@@ -1,6 +1,6 @@
 import { MongoDBManager } from "../../../db/MongoDBManager.js"
 
-const url = ""
+const url = process.env.MONGODBURL
 
 const schema = {
    name: {type: String, require: true, max: 60},
