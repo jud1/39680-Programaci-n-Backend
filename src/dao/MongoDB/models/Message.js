@@ -15,3 +15,4 @@ export class MessageDaoMongoDB extends MongoDBManager {
    }
    // Metodos propios
 }
+ManagerMessageMongoDB
