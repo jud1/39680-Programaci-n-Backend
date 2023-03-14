@@ -37,8 +37,6 @@ io.on('connection', async socket => {
    const initialMessages = await managerMessages.getElements()
    socket.emit('getInitialMessages', initialMessages)
    socket.on('message', async info => {
-      const data = await getManagerMessages()
-      const managerMessages = new data.ManagerMessagesMongoDB
       await managerMessages.addElements(info)
       const auxUpd = await managerMessages.getElements()
       socket.emit('updatedMessages', auxUpd)

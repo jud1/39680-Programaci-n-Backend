@@ -1,10 +1,20 @@
 <h1>Pagina de chat</h1>
-<input id="chatBox" type="text" class="uk-input" placeholder="Text here">
-<hr/>
-
-<div class="uk-card uk-card-default uk-card-body">
-   <h3 class="uk-card-title">Mensajes</h3>
-   <ul id="chatHistory" class="uk-list uk-list-divider"></ul>
+<div class="uk-child-width-1-2@m" uk-grid="">
+   <div>
+      <div uk-sticky="offset: 20">
+         <div class="uk-inline uk-width-1-1">
+            <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: arrow-right"></span>
+            <input id="chatBox" type="text" class="uk-input" placeholder="Text here" maxlength="200">
+         </div>
+         <small><span id="charactersLength">200</span> caracteres disponibles</small>
+      </div>
+   </div>
+   <div>
+      <div class="uk-card uk-card-default uk-card-body">
+         <h3 class="uk-card-title">Mensajes</h3>
+         <ul id="chatHistory" class="uk-list uk-list-divider"></ul>
+      </div>
+   </div>
 </div>
 
 <script src="
