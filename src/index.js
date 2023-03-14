@@ -4,10 +4,12 @@ import { Server } from "socket.io"
 import {__dirname} from './path.js'
 import { engine } from 'express-handlebars'
 import * as path from 'path'
+import { getManagerMessages } from "./dao/daoManager.js"
 
 // Import routes
 import productsRouter from "./routes/products.routes.js"
 import realtimeProductsRouter from "./routes/realtime.produts.routes.js"
+import chatRouter from "./routes/chat.routes.js"
 
 const app = express()
 
@@ -23,14 +25,22 @@ app.set("views", path.resolve(__dirname, "./views")) //`${__dirname}/views`
 app.use('/', express.static(__dirname + '/public'))
 app.use('/api/products', productsRouter)
 app.use('/', realtimeProductsRouter)
+app.use('/chat', chatRouter)
 
 const server = app.listen(app.get('port'), () => { /* console.log(`server up on port ${app.get('port')}`) */ })
 const io = new Server(server)
 app.set('socketio', io)
 
-io.on("connection", socket => {
-   socket.on('msgCliente', info => { // Captura de info de cliente
-      console.log(info)
+io.on('connection', async socket => {
+   const data = await getManagerMessages()
+   const managerMessages = new data.ManagerMessagesMongoDB
+   const initialMessages = await managerMessages.getElements()
+   socket.emit('getInitialMessages', initialMessages)
+   socket.on('message', async info => {
+      const data = await getManagerMessages()
+      const managerMessages = new data.ManagerMessagesMongoDB
+      await managerMessages.addElements(info)
+      const auxUpd = await managerMessages.getElements()
+      socket.emit('updatedMessages', auxUpd)
    })
-   socket.emit('msgServer', 'Servidor conectado')
 })
