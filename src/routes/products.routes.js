@@ -1,79 +1,69 @@
 import { Router } from "express"
 import { getManagerProducts } from '../dao/daoManager.js'
 
-/* const productos = new ProductManage('src/models/products.json')
-const productsRouter = Router() */
 const productsRouter = Router()
-
-/* await productos.verifyStaticId() */
 
 // (GET ALL) http://localhost:8080/api/productos
 productsRouter.get('/', async (req, res) => {
    const data = await getManagerProducts()
-   const managerproduct = new data.ProductDaoMongoDB
-   const traidos = await managerproduct.getElements()
-
-   console.log(traidos)
-
-   res.send(traidos)
-
-   /* // Generar peticion
-   const aux = await productos.getProducts(req.query.limit)
-   console.log(aux)
+   const managerproducts = new data.ManagerProductsMongoDB
+   const aux = await managerproducts.getElements()
    
-   // Socket io
-   req.app.get('socketio').emit('getUpdtProds', aux) // Prueba para mostar por consola
-   
-   // Res default
-   res.send(`Todos los productos`) */
+   // Defaut res
+   res.send(aux)
 })
 
 // (GET ONE) http://localhost:8080/api/productos/1
-productsRouter.get('/:pid', async (req, res) => {
-   /* // Generar peticion
-   console.log(await productos.getProductById(req.params.pid))
+productsRouter.get('/:id', async (req, res) => {
+   const data = await getManagerProducts()
+   const managerproducts = new data.ManagerProductsMongoDB
+   const aux = await managerproducts.getElementById(req.params.id)
    
-   // Res default
-   res.send(`Obtener producto`) */
+   // Defaut res
+   res.send(aux)
 })
 
 // (ADD ONE) http://localhost:8080/api/productos/ (body required)
 productsRouter.post('/', async (req, res) => {
-   /* // Generar peticion
-   await productos.addProduct(req.body)
-   
-   // aux con la lista de productos actualizada
-   const aux = await productos.getProducts(req.query.limit)
+   const data = await getManagerProducts()
+   const managerproducts = new data.ManagerProductsMongoDB
+   await managerproducts.addElements(req.body)
 
    // Socket io
-   req.app.get('socketio').emit('getUpdtProds', aux) // emitir al agregar uno
-   
-   // Res default
-   res.send(`Agregar producto`) */
+   const aux = await managerproducts.getElements()
+   req.app.get('socketio').emit('getUpdtProds', aux.map(product => product.toJSON()) )
+
+   // Defaut res
+   res.send(`element added: ${JSON.stringify(req.body)}`)
 })
 
 // (UPDATE ONE) http://localhost:8080/api/productos/1 (body required)
-productsRouter.put('/:pid', async (req, res) => {
-   /* // Generar peticion
-   await productos.updateProduct(req.params.pid, req.body)
-   
-   // Res default
-   res.send(`Modificar producto`) */
+productsRouter.put('/:id', async (req, res) => {
+   const data = await getManagerProducts()
+   const managerproducts = new data.ManagerProductsMongoDB
+   const idParam = req.params.id
+   await managerproducts.updateElement(idParam, req.body)
+
+   // Socket io
+   const aux = await managerproducts.getElements()
+   req.app.get('socketio').emit('getUpdtProds', aux.map(product => product.toJSON()))
+
+   // Defaut res
+   res.send(`Product ${idParam} was modify`)
 })
 
 // (DELETE ONE) http://localhost:8080/api/productos/1
-productsRouter.delete('/:pid', async (req, res) => {
-   /* // Generar peticion
-   await productos.deleteProduct(Number(req.params.pid))
-   
-   // aux con la lista de productos actualizada
-   const aux = await productos.getProducts(req.query.limit)
+productsRouter.delete('/:id', async (req, res) => {
+   const data = await getManagerProducts()
+   const managerproducts = new data.ManagerProductsMongoDB
+   await managerproducts.deleteElement(req.params.id)
 
    // Socket io
-   req.app.get('socketio').emit('getUpdtProds', aux) // emitir al eliminar uno
-   
-   // Res default
-   res.send(`Eliminar producto`) */
+   const aux = await managerproducts.getElements()
+   req.app.get('socketio').emit('getUpdtProds', aux.map(product => product.toJSON()))
+
+   // Defaut res
+   res.send(`Product ${req.params.id} was deleted`)
 })
 
 

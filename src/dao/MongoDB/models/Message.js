@@ -8,11 +8,10 @@ const schema = {
    message: {type: String, require: true}
 }
 
-export class MessageDaoMongoDB extends MongoDBManager {
+export class ManagerMessagesMongoDB extends MongoDBManager {
    constructor() {
       super(url, "messages", schema)
       // Atributos propios
    }
    // Metodos propios
 }
-ManagerMessageMongoDB
