@@ -9,6 +9,7 @@ import { getManagerMessages } from "./dao/daoManager.js"
 // Import routes
 import productsRouter from "./routes/products.routes.js"
 import realtimeProductsRouter from "./routes/realtime.produts.routes.js"
+import cartsRouter from "./routes/carts.routes.js"
 import chatRouter from "./routes/chat.routes.js"
 
 const app = express()
@@ -25,6 +26,7 @@ app.set("views", path.resolve(__dirname, "./views")) //`${__dirname}/views`
 app.use('/', express.static(__dirname + '/public'))
 app.use('/api/products', productsRouter)
 app.use('/', realtimeProductsRouter)
+app.use('/api/carts', cartsRouter)
 app.use('/chat', chatRouter)
 
 const server = app.listen(app.get('port'), () => { /* console.log(`server up on port ${app.get('port')}`) */ })
