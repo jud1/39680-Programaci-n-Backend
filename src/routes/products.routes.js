@@ -7,21 +7,9 @@ const productsRouter = Router()
 productsRouter.get('/', async (req, res) => {
    const data = await getManagerProducts()
    const managerproducts = new data.ManagerProductsMongoDB
-   const aux = await managerproducts.getElements()
-   const aggregatee = await managerproducts.getElementsFilters()
-   console.log('----------------------------------------')
-   console.log(aggregatee)
+   const aux = await managerproducts.getElementsPaginate(req.query)
    // Defaut res
    res.send(aux)
-})
-
-// (GET ALL) http://localhost:8080/api/productos
-productsRouter.get('/filter/', async (req, res) => {
-   const data = await getManagerProducts()
-   const managerproducts = new data.ManagerProductsMongoDB
-   const aggregateAux = await managerproducts.getElementsFilters()
-   // Defaut res
-   res.send(aggregateAux)
 })
 
 // (GET ONE) http://localhost:8080/api/productos/1

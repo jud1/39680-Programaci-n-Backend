@@ -6,10 +6,10 @@ const realtimeProductsRouter = Router()
 realtimeProductsRouter.get('/', async (req, res) => {
    const data = await getManagerProducts()
    const managerproducts = new data.ManagerProductsMongoDB
-   const aux = await managerproducts.getElements()
+   const aux = await managerproducts.getElementsPaginate(req.query)
    const jsonAux = JSON.parse(JSON.stringify(aux))
    res.render("home", { 
-      products: aux.map(product => product.toJSON()) 
+      products: aux.docs.map(product => product.toJSON()) 
    })
 })
 realtimeProductsRouter.get('/realTimeProducts', async (req, res) => {

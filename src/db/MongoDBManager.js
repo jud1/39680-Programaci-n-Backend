@@ -8,10 +8,11 @@ export class MongoDBManager {
       this.#url = url // Esta propiedad deberia ser privada
       this.collection = collection
       this.schema = new mongoose.Schema(schema)
+      this.schema.plugin(paginate)
       this.model = mongoose.models[this.collection] || mongoose.model(this.collection, this.schema)
    }
 
-   #setConnection = async () => { // Arrow function
+   setConnection = async () => { // Arrow function
       try {
          await mongoose.connect(this.#url)
          console.log('MongoDB is conected')
@@ -23,7 +24,7 @@ export class MongoDBManager {
 
    // Arrow function
    getElements = async () => {
-      this.#setConnection()
+      this.setConnection()
       try {
          const elements = await this.model.find()
          return elements
@@ -33,16 +34,14 @@ export class MongoDBManager {
       }
    }
 
-   getElementsFilters = async () => {
-      this.schema.plugin(paginate)
-      this.#setConnection()
+   // Use to test aggregate
+   getElementsAggregate = async () => {
+      this.setConnection()
       try {
-         
-         const elements = await (this.model).paginate({status: true}, {limit:3, page: 1})
-         /* const elements = await this.model.aggregate([
-            { $match: {status: true }}, // match element
+         const elements = await this.model.aggregate([
+            { $match: {status: true}}, // match element
             { $sort: {price: 1} } // 1 menor -> mayor / -1 mayor -> menor
-         ]) */
+         ])
          return elements
       }
       catch(error) {
@@ -51,7 +50,7 @@ export class MongoDBManager {
    }
 
    getElementById = async id => {
-      this.#setConnection()
+      this.setConnection()
       try {
          const element = await this.model.findById(id)
          return element
@@ -62,7 +61,7 @@ export class MongoDBManager {
    }
    
    async addElements(elements) { // Agrega uno o varios elementos
-      this.#setConnection()
+      this.setConnection()
       try {
          const message = await this.model.insertMany(elements)
          return message
@@ -73,7 +72,7 @@ export class MongoDBManager {
    }
 
    async updateElement(id, info) {
-      this.#setConnection()
+      this.setConnection()
       try {
          const message = await this.model.findByIdAndUpdate(id, info)
          return message
@@ -84,7 +83,7 @@ export class MongoDBManager {
    }
    
    async deleteElement(id) {
-      this.#setConnection()
+      this.setConnection()
       try {
          const response = await this.model.findByIdAndRemove(id)
          return response

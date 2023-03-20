@@ -42,7 +42,21 @@ const schema = {
 export class ManagerProductsMongoDB extends MongoDBManager {
    constructor() {
       super(process.env.MONGODBURL, "products", schema)
-      // Atributos propios
+   }
+   getElementsPaginate = async queryParams => {
+      let { limit, page, sort, ...query } = queryParams
+      !limit && (limit = 5)
+      !page && (page = 1)
+      sort = queryParams.sort ? [["price", queryParams.sort]] : null
+      await this.setConnection()
+
+      try {
+         const elements = await this.model.paginate(query, {limit, page, sort})
+         return elements
+      }
+      catch(error){
+         res.send(error)
+      }
    }
    // Metodos propios
 }
