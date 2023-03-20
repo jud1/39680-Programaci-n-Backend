@@ -10,6 +10,7 @@ import { getManagerMessages } from "./dao/daoManager.js"
 import productsRouter from "./routes/products.routes.js"
 import realtimeProductsRouter from "./routes/realtime.produts.routes.js"
 import cartsRouter from "./routes/carts.routes.js"
+import cartsViewsRouter from "./routes/cartsViews.routes.js"
 import chatRouter from "./routes/chat.routes.js"
 import uploadRouter from "./routes/upload.routes.js"
 
@@ -28,6 +29,7 @@ app.use('/', express.static(__dirname + '/public'))
 app.use('/api/products', productsRouter)
 app.use('/', realtimeProductsRouter)
 app.use('/api/carts', cartsRouter)
+app.use('/carts', cartsViewsRouter)
 app.use('/chat', chatRouter)
 app.use('/upload', uploadRouter)
 

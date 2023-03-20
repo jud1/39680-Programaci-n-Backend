@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import paginate from "mongoose-paginate-v2"
 
 export class MongoDBManager {
 
@@ -29,6 +30,23 @@ export class MongoDBManager {
       }
       catch(error) {
          console.log(`MongoDB error on read all elements: ${error}`)
+      }
+   }
+
+   getElementsFilters = async () => {
+      this.schema.plugin(paginate)
+      this.#setConnection()
+      try {
+         
+         const elements = await (this.model).paginate({status: true}, {limit:3, page: 1})
+         /* const elements = await this.model.aggregate([
+            { $match: {status: true }}, // match element
+            { $sort: {price: 1} } // 1 menor -> mayor / -1 mayor -> menor
+         ]) */
+         return elements
+      }
+      catch(error) {
+         console.log(`MongoDB error on read all elements w/ filters: ${error}`)
       }
    }
 
