@@ -3,7 +3,7 @@ import { getManagerProducts } from '../dao/daoManager.js'
 
 const productsRouter = Router()
 
-// (GET ALL) http://localhost:8080/api/productos
+// (GET ALL) http://localhost:8080/api/products
 productsRouter.get('/', async (req, res) => {
    const data = await getManagerProducts()
    const managerproducts = new data.ManagerProductsMongoDB
@@ -12,7 +12,7 @@ productsRouter.get('/', async (req, res) => {
    res.send(aux)
 })
 
-// (GET ONE) http://localhost:8080/api/productos/1
+// (GET ONE) http://localhost:8080/api/products/1
 productsRouter.get('/:id', async (req, res) => {
    const data = await getManagerProducts()
    const managerproducts = new data.ManagerProductsMongoDB
@@ -22,7 +22,7 @@ productsRouter.get('/:id', async (req, res) => {
    res.send(aux)
 })
 
-// (ADD ONE) http://localhost:8080/api/productos/ (body required)
+// (ADD ONE) http://localhost:8080/api/products/ (body required)
 productsRouter.post('/', async (req, res) => {
    const data = await getManagerProducts()
    const managerproducts = new data.ManagerProductsMongoDB
@@ -36,7 +36,7 @@ productsRouter.post('/', async (req, res) => {
    res.send(`element added: ${JSON.stringify(req.body)}`)
 })
 
-// (UPDATE ONE) http://localhost:8080/api/productos/1 (body required)
+// (UPDATE ONE) http://localhost:8080/api/products/1 (body required)
 productsRouter.put('/:id', async (req, res) => {
    const data = await getManagerProducts()
    const managerproducts = new data.ManagerProductsMongoDB
@@ -51,7 +51,7 @@ productsRouter.put('/:id', async (req, res) => {
    res.send(`Product ${idParam} was modify`)
 })
 
-// (DELETE ONE) http://localhost:8080/api/productos/1
+// (DELETE ONE) http://localhost:8080/api/products/1
 productsRouter.delete('/:id', async (req, res) => {
    const data = await getManagerProducts()
    const managerproducts = new data.ManagerProductsMongoDB

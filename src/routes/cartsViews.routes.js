@@ -17,7 +17,8 @@ cartsViewsRouter.get('/:id', async (req, res) => {
    try {
       const cartPopulate = await cart.populate('products.product') // Yes!
       const auxPopulate = cartPopulate.products.map(product => product.toJSON())
-      res.render("cartView", {products: auxPopulate})
+      console.log(cartPopulate.id)
+      res.render("cartView", {products: auxPopulate, cart: cartPopulate.id})
    }
    catch(error) {
       res.send(error)

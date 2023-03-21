@@ -45,7 +45,7 @@ export class ManagerProductsMongoDB extends MongoDBManager {
    }
    getElementsPaginate = async queryParams => {
       let { limit, page, sort, ...query } = queryParams
-      !limit && (limit = 5)
+      !limit && (limit = 10)
       !page && (page = 1)
       sort = queryParams.sort ? [["price", queryParams.sort]] : null
       await this.setConnection()
