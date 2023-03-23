@@ -6,7 +6,6 @@ socket.on('msgServer', mensaje => {
    console.log(mensaje)
 })
 
-
 const nodoListaProductos = document.getElementById('lista_productos')
 
 socket.on('getUpdtProds', productos => {
@@ -36,4 +35,39 @@ socket.on('getUpdtProds', productos => {
       `
       nodoListaProductos.append(li)
    })
+})
+
+
+// Pagination
+
+const newUrl = (key, value) => {
+   const url = window.location.search
+   const urlParams = new URLSearchParams(url)
+   urlParams.set(key, value)
+   return urlParams.toString()
+}
+
+const setFilterNavigation = (dataAtribute) => {
+   const buttonNode = document.querySelector(`[${dataAtribute}]`)
+   const atributte = buttonNode.getAttribute(dataAtribute)
+   const key = dataAtribute.split("-")
+   if(atributte) {
+      buttonNode.addEventListener('click', evt => {
+         evt.preventDefault()
+         window.location.replace(
+            `/?${newUrl(
+               key[key.length-1],
+               atributte)
+            }`
+         )
+      })
+   }
+   else buttonNode.setAttribute('disabled', "")
+}
+
+// Apply to all buttons 
+document.querySelectorAll('.nav-attribute').forEach(item=> {
+   const attrArray = item.getAttributeNames()
+   const attr = attrArray.find(atribute => atribute.includes('data-nav-'))
+   setFilterNavigation(attr)
 })

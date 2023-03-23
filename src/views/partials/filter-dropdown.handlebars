@@ -1,0 +1,29 @@
+<div>
+   <button class="uk-button uk-button-default" type="button">
+      <span>Filtros</span>
+      <span uk-icon="icon: settings"></span>
+   </button>
+   <div uk-dropdown="mode: click">
+      <ul id="products_filtros" class="uk-nav uk-dropdown-nav">
+         <li>
+            <a href="#" class="nav-attribute" data-nav-asc-sort="1">Menor a mayor</a>
+         </li>
+         <li>
+            <a href="#" class="nav-attribute" data-nav-desc-sort="-1">Mayor a menor</a>
+         </li>
+         <li class="uk-nav-divider"></li>
+         <li class="uk-nav-header">
+            Mostrar:
+         </li>
+         <li class="uk-flex" >
+            <div>
+               <a href="" class="uk-link-reset nav-attribute" data-nav-num5-limit="5">5 </a>
+               <span>| </span>
+               <a href="" class="uk-link-reset nav-attribute" data-nav-num10-limit="10">10 </a>
+               <span>| </span>
+               <a href="" class="uk-link-reset nav-attribute" data-nav-num15-limit="15">15 </a>
+            </div>
+         </li>
+      </ul>
+   </div>
+</div>
