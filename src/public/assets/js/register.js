@@ -33,6 +33,7 @@ document.getElementById('registerBtn').addEventListener('click', async (evt) => 
                .then(function() {
                   // Autentificar
                   // Redirigir al home
+                  window.location.href = '/'
                })
          })
          .catch((error) => {
