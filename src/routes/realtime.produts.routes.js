@@ -7,10 +7,11 @@ realtimeProductsRouter.get('/', async (req, res) => {
    const data = await getManagerProducts()
    const managerproducts = new data.ManagerProductsMongoDB
    const aux = await managerproducts.getElementsPaginate(req.query)
-   console.log(aux)
+   // console.log(aux)
    res.render("home", { 
       products: aux.docs.map(product => product.toJSON()),
-      info: aux
+      info: aux,
+      session: req.session.uid ? req.session.uid : null
    })
 })
 

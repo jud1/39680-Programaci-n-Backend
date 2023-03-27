@@ -7,7 +7,6 @@ export const getManagerProducts = async () => {
    return modelProduct
 }
 
-// 1 es MongoDB, 2 es Postgresql
 export const getManagerMessages = async () => {
    const modelMessage = process.env.SELECTEDBD === "1"
       ? await import('./MongoDB/models/Message.js')
@@ -16,11 +15,18 @@ export const getManagerMessages = async () => {
    return modelMessage
 }
 
-// 1 es MongoDB, 2 es Postgresql
 export const getManagerCarts = async () => {
    const modelCart = process.env.SELECTEDBD === "1"
       ? await import('./MongoDB/models/Cart.js')
       : await import('./Postgresql/models/Cart.js')
 
    return modelCart
+}
+
+export const getManagerUsers = async () => {
+   const modelUser = process.env.SELECTEDBD === "1"
+      ? await import('./MongoDB/models/User.js')
+      : await import('./Postgresql/models/User.js')
+
+   return modelUser
 }

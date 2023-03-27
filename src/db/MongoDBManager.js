@@ -67,7 +67,8 @@ export class MongoDBManager {
          return message
       }
       catch(error) {
-         console.log(`MongoDB error on create an element(s): ${error}`)
+         console.log(`MongoDB error on create an element(s): ${error}`);
+         throw new Error(`MongoDB error on create an element(s): ${error}`);
       }
    }
 

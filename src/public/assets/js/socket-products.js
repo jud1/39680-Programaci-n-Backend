@@ -11,7 +11,7 @@ const nodoListaProductos = document.getElementById('lista_productos')
 socket.on('getUpdtProds', productos => {
    // Vaciamos la lista
    nodoListaProductos.innerHTML = null
-   console.log(productos)
+   // console.log(productos)
    // Por cada item agremos un div
    productos.forEach((producto) => {
       const li = document.createElement('li')

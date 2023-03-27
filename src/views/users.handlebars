@@ -1,0 +1,43 @@
+<h1>Vista usuarios</h1>
+{{#if session.isAdmin}}
+   <div class="uk-overflow-auto">
+      <table class="uk-table uk-table-middle uk-table-small uk-table-divider">
+         <thead>
+            <tr>
+               <th></th>
+               <th>Username</th>
+               <th>Role</th>
+               <th>Id</th>
+               <th>Email</th>
+               <th>Name</th>
+               <th>Last Name</th>
+               <th>Create at</th>
+            </tr>
+         </thead>
+         <tbody>
+            {{#each users}}
+               <tr id="{{this._id}}">
+                  <td>
+                     <img class="uk-preserve-width uk-border-circle" src="{{this.avatar}}" width="40" height="40" alt="Avatar">
+                  </td>
+                  <td>{{this.username}}</td>
+                  <td>{{this.role}}</td>
+                  <td class="uk-text-break">{{this._id}}</td>
+                  <td>{{this.email}}</td>
+                  <td>{{this.name}}</td>
+                  <td>{{this.lastname}}</td>
+                  <td class="uk-text-break">{{this.date}}</td>
+               </tr>
+            {{/each}}
+         </tbody>
+      </table>
+   </div>
+{{else}}
+   <div class="uk-alert-danger" uk-alert="">
+      <h3>
+         <span class="uk-margin-small-right" uk-icon="ban"></span>
+         <span class="uk-font-bold">Access denied</span>  
+      </h3>
+      <p>You have not permission to use this</p>
+   </div>
+{{/if}}

@@ -1,6 +1,6 @@
 const removeButtons = document.querySelectorAll('.delete-button')
 const cartId = document.getElementById('lista_productos').getAttribute('data-id')
-console.log(cartId)
+// console.log(cartId)
 
 const deleteProduct = async id => {
    try {
