@@ -30,10 +30,10 @@ document.getElementById('registerBtn').addEventListener('click', async (evt) => 
          })
          .then((data) => {
             UIkit.modal.alert(`User Created`)
-               .then(function() {
+               .then(async () => {
                   // Autentificar
                   // Redirigir al home
-                  window.location.href = '/'
+                  window.location.href = '/session/login'
                })
          })
          .catch((error) => {

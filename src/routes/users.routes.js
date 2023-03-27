@@ -30,7 +30,11 @@ usersApiRouter.post('/', async (req, res) => {
       const data = await getManagerUsers()
       const managerusers = new data.ManagerUsersMongoDB
       await managerusers.addElements(req.body)
-      
+      /* req.session.uid = {
+         uid: user.id,
+         email: user.email,
+         isAdmin: user.role === 'admin' ? true : false
+      } */
       // Defaut res
       res.send(`element added: ${JSON.stringify(req.body)}`)
    }
