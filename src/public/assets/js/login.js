@@ -10,7 +10,7 @@ document.getElementById('loginBtn').addEventListener('click', async (evt) => {
    if (loginData.email && loginData.password) getAllValues = true
    
    if (validEmail && getAllValues) {
-      fetch("/api/session/login", { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(loginData)})
+      fetch("/api/sessions/login", { method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(loginData)})
          .then((response) => {
             if (!response.ok) throw new Error(response.statusText)
             return response.json()

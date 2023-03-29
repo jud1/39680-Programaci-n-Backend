@@ -1,4 +1,4 @@
-import { MongoDBManager } from "../../../db/MongoDBManager.js"
+import { MongoDBManager } from "../db/MongoDBManager.js"
 
 const url = process.env.MONGODBURL
 

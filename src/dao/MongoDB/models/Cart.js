@@ -1,4 +1,4 @@
-import { MongoDBManager } from "../../../db/MongoDBManager.js"
+import { MongoDBManager } from "../db/MongoDBManager.js"
 import mongoose from "mongoose"
 
 const schema = {
