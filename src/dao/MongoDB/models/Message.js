@@ -1,4 +1,4 @@
-import { MongoDBManager } from "../db/MongoDBManager.js"
+import { MongodbManager } from "../db/MongodbManager.js"
 
 const url = process.env.MONGODBURL
 
@@ -8,7 +8,7 @@ const schema = {
    date: { type: Date, require: true }
 }
 
-export class ManagerMessagesMongoDB extends MongoDBManager {
+export class ManagerMessagesDao extends MongodbManager {
    constructor() {
       super(url, "messages", schema)
       // Atributos propios

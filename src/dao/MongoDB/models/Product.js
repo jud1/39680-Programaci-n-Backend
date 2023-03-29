@@ -1,4 +1,4 @@
-import { MongoDBManager } from "../db/MongoDBManager.js"
+import { MongodbManager } from "../db/MongodbManager.js"
 
 const schema = {
    name: {
@@ -33,13 +33,10 @@ const schema = {
       type: String,
       max: 20,
       default: 'default'
-   }/* ,
-   images: {
-      default: ['default.jpg']
-   } */
+   }
 }
 
-export class ManagerProductsMongoDB extends MongoDBManager {
+export class ManagerProductsDao extends MongodbManager {
    constructor() {
       super(process.env.MONGODBURL, "products", schema)
    }

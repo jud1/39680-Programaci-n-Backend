@@ -1,12 +1,11 @@
 import "dotenv/config"
 import express from "express"
 import cors from 'cors'
+import sessionConfig from './config/sessions.js'
 import { Server } from "socket.io"
 import { __dirname } from './path.js'
 import * as path from 'path'
 import { engine } from 'express-handlebars'
-import session from "express-session"
-import MongoStore from "connect-mongo"
 import router from "./routes/routes.js"
 
 // App
@@ -17,16 +16,7 @@ app.set('port', process.env.PORT || 5000)
 app.use(cors({origin: process.env.CORS_ORIGIN}))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(session({ 
-   store: MongoStore.create({ 
-      mongoUrl: process.env.MONGODBURL, 
-      mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true }, 
-      ttl: 300
-   }),
-   secret: process.env.SESSION_SECRET, 
-   resave: true, 
-   saveUninitialized: true 
-}))
+app.use(sessionConfig)
 
 // Handlebars
 app.engine("handlebars", engine()) //Config de hbs

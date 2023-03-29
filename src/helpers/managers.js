@@ -2,18 +2,18 @@ import { getManagerProducts, getManagerCarts, getManagerMessages, getManagerUser
 
 // PRODUCTS
 const dataProducts = await getManagerProducts()
-const managerProducts = new dataProducts.ManagerProductsMongoDB
+const managerProducts = new dataProducts.ManagerProductsDao
 
 // CARTS
 const dataCarts = await getManagerCarts()
-const managerCarts = new dataCarts.ManagerCartsMongoDB
+const managerCarts = new dataCarts.ManagerCartsDao
 
 // CARTS
 const dataMessages = await getManagerMessages()
-const managerMessages = new dataMessages.ManagerMessagesMongoDB
+const managerMessages = new dataMessages.ManagerMessagesDao
 
 // USERS
 const dataUsers = await getManagerUsers()
-const managerUsers = new dataUsers.ManagerUsersMongoDB
+const managerUsers = new dataUsers.ManagerUsersDao
 
 export { managerProducts, managerCarts, managerMessages, managerUsers }

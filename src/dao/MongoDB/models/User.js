@@ -1,4 +1,4 @@
-import { MongoDBManager } from "../db/MongoDBManager.js"
+import { MongodbManager } from "../db/MongodbManager.js"
 
 const url = process.env.MONGODBURL
 
@@ -27,11 +27,9 @@ const schema = {
    role: {
       type: String, default: "user", enum: ["user", "admin", "superadmin"], immutable: true
    }
-
-
 }
 
-export class ManagerUsersMongoDB extends MongoDBManager {
+export class ManagerUsersDao extends MongodbManager {
    constructor() {
       super(url, "users", schema)
       // Atributos propios

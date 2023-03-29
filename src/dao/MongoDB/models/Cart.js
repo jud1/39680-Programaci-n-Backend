@@ -1,4 +1,4 @@
-import { MongoDBManager } from "../db/MongoDBManager.js"
+import { MongodbManager } from "../db/MongodbManager.js"
 import mongoose from "mongoose"
 
 const schema = {
@@ -16,7 +16,7 @@ const schema = {
    }
 }
 
-export class ManagerCartsMongoDB extends MongoDBManager {
+export class ManagerCartsDao extends MongodbManager {
    constructor() {
       super(process.env.MONGODBURL, "carts", schema)
       // Atributos propios
