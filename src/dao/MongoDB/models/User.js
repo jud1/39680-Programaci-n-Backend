@@ -7,19 +7,16 @@ const schema = {
       type: String, require: true, maxLength: 71, unique: true
    },
    password: { 
-      type: String, require: true, maxLength: 16 
+      type: String, require: true,
    },
-   username: {
-      type: String, require: true, maxLength: 20, unique: true
-   },
-   name: {
-      type: String, require: true, maxLength: 20
-   },
-   lastname: {
-      type: String, require: true, maxLength: 20
+   completename: {
+      type: String, require: true, maxLength: 80, unique: true
    },
    date: { 
       type: Date, default: Date.now()
+   },
+   birthday: {
+      type: Date, default: null,
    },
    avatar: {
       type: String, default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"

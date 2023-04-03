@@ -5,11 +5,13 @@ const sessionConfig = session({
    store: MongoStore.create({
       mongoUrl: process.env.MONGODBURL,
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-      ttl: 300,
+      ttl: 600,
    }),
    secret: process.env.SESSION_SECRET,
    resave: true,
+   rolling: true, 
    saveUninitialized: true,
+   // cookie: {maxAge: 1000*60*10}
 })
 
 export default sessionConfig

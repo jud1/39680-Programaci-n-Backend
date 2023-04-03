@@ -12,13 +12,13 @@
          </div>
          <div class="uk-navbar-right">
             <ul class="uk-navbar-nav">
-               {{#if session}}
-                  {{#if session.isAdmin}}
+               {{#if session.user}}
+                  {{#if isAdmin}}
                      <li><a href="/users">Users</a></li>
                   {{/if}}
                   <li class="uk-active">
                      <a href="#">
-                        {{#if session.isAdmin}}
+                        {{#if isAdmin}}
                            Admin
                            <span class="uk-icon-button uk-margin-small-right" uk-icon="star"></span>
                         {{else}}
@@ -29,13 +29,13 @@
                         <ul class="uk-nav uk-navbar-dropdown-nav">
                            <li class="uk-active">
                               <small>
-                                 {{#if session.isAdmin}}
+                                 {{#if isAdmin}}
                                     Admin:
                                  {{else}}
                                     User:
                                  {{/if}}
                               </small>
-                              <span>{{session.email}}</span>
+                              <span>{{session.user.email}}</span>
                            </li>
                            <li class="uk-nav-divider"></li>
                            <li>

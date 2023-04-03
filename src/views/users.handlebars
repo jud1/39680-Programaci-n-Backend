@@ -1,16 +1,14 @@
 <h1>Vista usuarios</h1>
-{{#if session.isAdmin}}
+{{#if isAdmin}}
    <div class="uk-overflow-auto">
       <table class="uk-table uk-table-middle uk-table-small uk-table-divider">
          <thead>
             <tr>
                <th></th>
-               <th>Username</th>
                <th>Role</th>
                <th>Id</th>
                <th>Email</th>
                <th>Name</th>
-               <th>Last Name</th>
                <th>Create at</th>
             </tr>
          </thead>
@@ -20,12 +18,10 @@
                   <td>
                      <img class="uk-preserve-width uk-border-circle" src="{{this.avatar}}" width="40" height="40" alt="Avatar">
                   </td>
-                  <td>{{this.username}}</td>
                   <td>{{this.role}}</td>
                   <td class="uk-text-break">{{this._id}}</td>
                   <td>{{this.email}}</td>
-                  <td>{{this.name}}</td>
-                  <td>{{this.lastname}}</td>
+                  <td>{{this.completename}}</td>
                   <td class="uk-text-break">{{this.date}}</td>
                </tr>
             {{/each}}

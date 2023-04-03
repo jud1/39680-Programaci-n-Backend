@@ -5,6 +5,7 @@ import cartsRouter from "./api/carts.js"
 import usersRouter from "./api/users.js"
 import sessionsRouter from "./api/sessions.js"
 import uploadsRouter from "./api/uploads.js"
+import githubRouter from "./api/github.js"
 // Views routes
 import productsViewRouter from "./views/products.js"
 import cartsViewsRouter from "./views/carts.js"
@@ -19,6 +20,7 @@ router.use('/api/products', productsRouter)
 router.use('/api/carts', cartsRouter)
 router.use('/api/users', usersRouter)
 router.use('/api/sessions', sessionsRouter)
+router.use('/api/sessions', githubRouter)
 router.use('/api/uploads', uploadsRouter)
 
 // Views routes

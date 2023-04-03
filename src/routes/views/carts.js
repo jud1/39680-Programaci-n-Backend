@@ -10,11 +10,11 @@ cartsViewsRouter.get('/:id', async (req, res) => {
    try {
       const cartPopulate = await cart.populate('products.product')
       const auxPopulate = cartPopulate.products.map(product => product.toJSON())
-      // console.log(cartPopulate.id)
       res.render("cartView", {
          products: auxPopulate, 
          cart: cartPopulate.id, 
-         session: req.session.uid ? req.session.uid : null
+         session: req.session.passport ? req.session.passport : null,
+         isAdmin: (req.session.passport && req.session.passport.user && req.session.passport.user.role === 'admin') ? true : false
       })
    }
    catch(error) {
