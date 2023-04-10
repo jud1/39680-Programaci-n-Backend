@@ -2,9 +2,9 @@
    <h1>Productos Real Time</h1>
    {{> filter-dropdown info=info}}
 </div>
-<ul id="lista_productos" class="uk-grid-small uk-child-width-1-3@s" uk-grid="">
+<ul id="lista_productos" class="uk-grid-small uk-child-width-1-3@s" uk-grid="" data-cart="{{session.user.id_cart}}">
    {{#each products}}
-      <li>
+      <li class="product-card" id="{{this._id}}">
          <div class="uk-card uk-card-default">
             <div class="uk-card-header">
                <div class="uk-grid-small uk-flex-middle" uk-grid="">
@@ -18,6 +18,9 @@
             </div>
             <div class="uk-card-body">
                <p>{{this.description}}</p>
+            </div>
+            <div class="uk-card-footer">
+               <button class="uk-button uk-button-primary add-cart">Add to cart</button>
             </div>
          </div>
       </li>

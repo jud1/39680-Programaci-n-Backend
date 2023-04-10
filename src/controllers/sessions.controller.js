@@ -11,14 +11,6 @@ const login = async (req, res) => {
       if(!req.user) {
          return res.status(401).send({status: 'error', error: 'User not found'})
       }
-      
-      /* req.session.user = {
-         completename: req.user.completename,
-         email: req.user.email,
-         role: req.user.role,
-         isAdmin: req.user.role === 'admin' ? true : false
-      } */
-
       res.status(200).send({status: 'success', payload: req.user})
    }
    catch(error) {

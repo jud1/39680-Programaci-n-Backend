@@ -1,5 +1,4 @@
 import { managerUsers } from "../helpers/managers.js"
-import { createHash } from "../utils/bcrypt.js"
 
 const getUser = async (req, res) => {
    res.send(await managerUsers.getElements())
@@ -9,6 +8,7 @@ const getUsers = async (req, res) => {
    res.send(await managerUsers.getElementById(req.params.id))
 }
 
+// CREATE USER
 const createUser = async (req, res) => {
    res.send({status: 'success', message: 'User was created successfully'})
 }

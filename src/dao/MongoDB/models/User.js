@@ -1,3 +1,4 @@
+import { Schema } from "mongoose"
 import { MongodbManager } from "../db/MongodbManager.js"
 
 const url = process.env.MONGODBURL
@@ -23,6 +24,11 @@ const schema = {
    },
    role: {
       type: String, default: "user", enum: ["user", "admin", "superadmin"], immutable: true
+   },
+   id_cart: {
+      type: Schema.Types.ObjectId,
+      ref: "carts",
+      required: true
    }
 }
 

@@ -9,16 +9,19 @@ import * as path from 'path'
 import { engine } from 'express-handlebars'
 import router from "./routes/routes.js"
 import initializePassport from "./config/passport.js"
+import cookieParser from "cookie-parser"
 
 // App
 const app = express()
 app.set('port', process.env.PORT || 5000)
 
 //Middlewares
+app.use(cookieParser(process.env.PRIVATE_KEY_JWT))
 app.use(cors({origin: process.env.CORS_ORIGIN}))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(sessionConfig)
+
 // Passport
 initializePassport()
 app.use(passport.initialize())

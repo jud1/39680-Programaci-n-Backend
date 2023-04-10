@@ -13,6 +13,9 @@
          <div class="uk-navbar-right">
             <ul class="uk-navbar-nav">
                {{#if session.user}}
+                  <li>
+                     <a href="/carts/{{session.user.id_cart}}">Cart</a>
+                  </li>
                   {{#if isAdmin}}
                      <li><a href="/users">Users</a></li>
                   {{/if}}

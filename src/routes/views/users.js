@@ -1,9 +1,10 @@
 import { Router } from 'express'
 import { managerUsers } from '../../helpers/managers.js'
+import { authorization } from '../../utils/messageErrors.js'
 
 const usersViewsRouter = Router()
 
-usersViewsRouter.get('/', async (req, res) => {
+usersViewsRouter.get('/', authorization('admin'), async (req, res) => {
    const users = await managerUsers.getElements()
 
    if(req.session.passport && req.session.passport.user.role === 'admin'){

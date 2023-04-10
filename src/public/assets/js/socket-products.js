@@ -71,3 +71,26 @@ document.querySelectorAll('.nav-attribute').forEach(item=> {
    const attr = attrArray.find(atribute => atribute.includes('data-nav-'))
    setFilterNavigation(attr)
 })
+
+// add cart button
+const cid = document.getElementById('lista_productos').getAttribute('data-cart')
+if (!cid){
+   document.querySelectorAll('.uk-card-footer').forEach(item => {
+      item.remove()
+   })
+} else {
+   document.querySelectorAll('.product-card').forEach(item => {
+      const pid = item.getAttribute('id')
+      const button = item.querySelector('.add-cart')
+      button.addEventListener('click', evt => {
+         fetch(`/api/carts/${cid}/product/${pid}`, {method: 'PUT'})
+            .then(response => {
+               if (!response.ok) {
+                  throw new Error('Error al realizar la petición PUT');
+               }
+               window.location.href  = `/carts/${cid}`
+            })
+            .catch(error => console.error(error));
+      })
+   })
+}
