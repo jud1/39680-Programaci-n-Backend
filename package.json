@@ -1,46 +1,25 @@
 {
-  "name": "backend-coderhouse",
+  "name": "programacion-backend-39680-jose-ulloa-diaz",
   "version": "1.0.0",
-  "description": "Desde primera practica integradora en adelante",
+  "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
+    "testlog": "node src/index.js",
     "start": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jud1/backend-39680-jose-ulloa.git"
+    "url": "git+https://github.com/jud1/39680-Programaci-n-Backend.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jud1/backend-39680-jose-ulloa/issues"
+    "url": "https://github.com/jud1/39680-Programaci-n-Backend/issues"
   },
-  "homepage": "https://github.com/jud1/backend-39680-jose-ulloa#readme",
+  "homepage": "https://github.com/jud1/39680-Programaci-n-Backend#readme",
   "dependencies": {
-    "bcrypt": "^5.1.0",
-    "connect-mongo": "^5.0.0",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "express-handlebars": "^6.0.7",
-    "express-session": "^1.17.3",
-    "generate-password": "^1.7.0",
-    "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.0.1",
-    "mongoose-paginate-v2": "^1.7.1",
-    "multer": "^1.4.5-lts.1",
-    "passport": "^0.6.0",
-    "passport-github2": "^0.1.12",
-    "passport-jwt": "^4.0.1",
-    "passport-local": "^1.0.0",
-    "session-file-store": "^1.5.0",
-    "socket.io": "^4.6.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.21"
+    "nodemon": "^2.0.22"
   }
 }
