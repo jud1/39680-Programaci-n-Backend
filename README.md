@@ -1,6 +1,6 @@
 # Backend 39680 - JUD
 
-A Node.js Express project for a ecommerce
+A Node.js Express project for a e-commerce
 
 ## Getting Started
 
