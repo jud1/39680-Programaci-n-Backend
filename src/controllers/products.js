@@ -1,9 +1,19 @@
-import { findProducts, findProduct, createProduct, removeProduct, modifyProduct } from '../services/productsServices.js'
+import { findProducts, findPaginatedProducts, findProduct, createProduct, removeProduct, modifyProduct } from '../services/productsServices.js'
 
 const getProducts = async(req, res) => {
    try {
       const products = await findProducts()
       res.status(200).send(products)
+   }
+   catch(error) {
+      res.status(500).send('Error getting product', error)
+   }
+}
+
+const getPaginatedProducts = async(req, res) => {
+   try {
+      const product = await findPaginatedProducts(req.query)
+      res.status(200).send(product)
    }
    catch(error) {
       res.status(500).send('Error getting product', error)
@@ -22,8 +32,8 @@ const getProduct = async(req, res) => {
 
 const postProduct = async(req, res) => {
    try {
-      const {name, description, price} = req.body
-      const newProduct = await createProduct({name, description, price})
+      const { name, description, sku, price, stock } = req.body
+      const newProduct = await createProduct({ name, description, sku, price, stock })
       res.status(200).send(newProduct)
    }
    catch(error) {
@@ -52,4 +62,4 @@ const updateProduct = async(req, res) => {
 }
 
 
-export { getProducts, getProduct, postProduct, deleteProduct, updateProduct}
+export { getProducts, getPaginatedProducts, getProduct, postProduct, deleteProduct, updateProduct}

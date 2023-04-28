@@ -5,10 +5,12 @@ import { postCart, getCartById, getAllCarts, putProductOnCart, deleteProductFrom
 
 const routerCarts = Router()
 
-routerCarts.get('/', passportError('jwt'), authorizationRole('admin'), getAllCarts)
+/* Error en autentificación de ruta */
+// routerCarts.get('/', passportError('jwt'), authorizationRole('admin'), getAllCarts)
 
 routerCarts.post('/', postCart)
 routerCarts.get('/:id', getCartById)
+routerCarts.get('/', getAllCarts)
 routerCarts.put('/:id/product/:pid', putProductOnCart)
 routerCarts.delete('/:id/product/:pid', deleteProductFromCart)
 routerCarts.put('/:id', deleteAllProductsFromCart)

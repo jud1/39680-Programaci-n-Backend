@@ -1,4 +1,8 @@
-import cartsModel from '../models/cartsModel.js'
+// Dinamic import (DAO)
+const path = process.env.SELECTEDBD === '1' ? '../models/mongodb/cartsModel.js' : '../models/sequelize/cartsModel.js'
+
+const importedModule = await import(path)
+const cartsModel = importedModule.default
 
 // Create one
 const createCart = async () => {
@@ -15,7 +19,8 @@ const createCart = async () => {
 const findCart = async id => {
    try {
       const cart = await cartsModel.findById(id)
-      return cart
+      const cartPopulate = await cart.populate('products.product')
+      return cartPopulate
    }
    catch (error) {
       return error

@@ -1,4 +1,8 @@
-import productsModel from '../models/productsModel.js'
+// Dinamic import (DAO)
+const path = process.env.SELECTEDBD === '1' ? '../models/mongodb/productsModel.js' : '../models/sequelize/productsModel.js'
+
+const importedModule = await import(path)
+const productsModel = importedModule.default
 
 // Create one
 const createProduct = async (product) => {
@@ -34,6 +38,21 @@ const findProducts = async () => {
    }
 }
 
+const findPaginatedProducts = async (queryParams) => {
+   let { limit, page, sort, ...query } = queryParams
+   !limit && (limit = 10)
+   !page && (page = 1)
+   sort = queryParams.sort ? [["price", queryParams.sort]] : null
+
+   try {
+      const products = await productsModel.paginate(query, {limit, page, sort})
+      return products
+   }
+   catch(error) {
+      return error
+   }
+}
+
 const removeProduct = async (id) => {
    try {
       const product = await productsModel.findByIdAndDelete(id)
@@ -54,4 +73,4 @@ const modifyProduct = async (id, product) => {
    }
 }
 
-export { findProducts, findProduct, createProduct, removeProduct, modifyProduct}
+export { findProducts, findPaginatedProducts, findProduct, createProduct, removeProduct, modifyProduct}
