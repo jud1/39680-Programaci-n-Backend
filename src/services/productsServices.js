@@ -1,10 +1,11 @@
 import productsModel from '../models/productsModel.js'
 
-// Get all
-const findProducts = async () => {
+// Create one
+const createProduct = async (product) => {
    try {
-      const products = await productsModel.find()
-      return products
+      const newProduct = new productsModel(product)
+      await newProduct.save()
+      return newProduct
    }
    catch(error) {
       return error
@@ -22,12 +23,11 @@ const findProduct = async (id) => {
    }
 }
 
-// Create one
-const createProduct = async (product) => {
+// Get all
+const findProducts = async () => {
    try {
-      const newProduct = new productsModel(product)
-      await newProduct.save()
-      return newProduct
+      const products = await productsModel.find()
+      return products
    }
    catch(error) {
       return error

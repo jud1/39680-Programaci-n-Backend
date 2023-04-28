@@ -15,9 +15,6 @@ A Node.js Express project for a e-commerce
 
 ### Executing program
 
-* How to run the program
-* Step-by-step bullets
-
 `npm install` & `npm start`
 
 
@@ -28,7 +25,7 @@ Jose Ulloa
 
 ## Version History
 
-* 0.1
+* 0.x
     * Initial Release (WIP)
 
 ## License

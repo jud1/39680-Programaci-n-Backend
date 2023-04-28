@@ -1,29 +1,51 @@
 import { Schema, model } from 'mongoose'
 
 const usersSchema = new Schema({
-   first_name: {
-      type: String,
+   email: { 
+      type: String, 
+      require: true, 
+      maxLength: 70, 
+      unique: true
+   },
+   password: { 
+      type: String, 
+      require: true,
+   },
+   firstname: {
+      type: String, 
+      maxLength: 40,
       required: true
    },
-   last_name: {
-      type: String,
+   lastname: {
+      type: String, 
+      maxLength: 40,
       required: true
    },
-   email: {
-      type: String,
-      unique: true,
-      index: true
+   date: { 
+      type: Date, 
+      default: Date.now(),
+      inmutable: true
    },
-   age: {
-      type: Number,
-      required: true
+   birthday: {
+      type: Date, 
+      default: null
    },
-   rol: {
-      type: String,
-      default: "user"
+   avatar: {
+      type: String, 
+      default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
    },
-   password: {
+   role: {
+      type: String, 
+      default: "user", 
+      enum: ["user", "admin"]
+   },
+   phone: {
       type: String,
+      default: null
+   },
+   id_cart: {
+      type: Schema.Types.ObjectId,
+      ref: "Carts",
       required: true
    }
 })
