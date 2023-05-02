@@ -1,75 +1,112 @@
-import { createUser, findUserByEmail } from "../services/usersServices.js";
-import passport from "passport";
-import jwt from "jsonwebtoken";
-import { validatePassword, createHash } from "../utils/bcrypt.js";
+import { createUser, findUserByEmail } from "../services/usersServices.js"
+import passport from "passport"
+import jwt from "jsonwebtoken"
+import { validatePassword, createHash } from "../utils/bcrypt.js"
 
-export const loginUser = async (req, res, next) => {
-    try {
-        passport.authenticate('jwt', { session: false }, async (err, user, info) => {
-            if (err) {
-                return res.status(401).send("Error en consulta de token")
+const loginUser = async (req, res, next) => {
+   try {
+      passport.authenticate('jwt', { session: false }, async (error, user, info) => {
+         if (error) {
+            return res.status(401).send("Error on token")
+         }
+
+         // Token does not exist, so I validate the user
+         if (!user) {
+            const { email, password } = req.body
+            const userBDD = await findUserByEmail(email)
+
+            if (!userBDD || !validatePassword(password, userBDD.password)) {
+               return res.status(401).send("Not valid credentials")
             }
 
-            if (!user) {
-                //El token no existe, entonces consulto por el usuario
-                const { email, password } = req.body
-                const userBDD = await findUserByEmail(email)
+            // User valid, so i create the token
+            const token = jwt.sign(
+               { user: { id: userBDD._id } }, 
+               process.env.JWT_SECRET
+            )
+            
+            // I send the token to the client
+            res.cookie('jwt', token, 
+               { httpOnly: true, secure: false, signed: true, expires: new Date(Date.now() + 3600000) }
+            )
 
-                if (!userBDD) {
-                    // UserBDD no encontrado en mi aplicacion
-                    return res.redirect('http://localhost:3000/register/') //(401).send("User no encontrado")
-                }
+            return res.status(200).json({ token })
 
-                if (!validatePassword(password, userBDD.password)) {
-                    // Contraseña no es válida
-                    return res.status(401).send("Contraseña no valida")
-                }
+         }
+         // Token exist, so i validate the token
+         else {
+            const token = req.cookies.jwt;
+            jwt.verify(token, process.env.JWT_SECRET, async (error, decodedToken) => {
+               if (error) {
+                  // Token no valido
+                  return res.status(401).send("Not valid credentials")
+               } else {
+                  // Token valido
+                  req.user = user
+                  return res.status(200).send("Valid credentials")
+               }
+            })
+         }
 
-                // Ya que el usuario es valido, genero un nuevo token
-                const token = jwt.sign({ user: { id: userBDD._id } }, process.env.JWT_SECRET)
-                res.cookie('jwt', token, { httpOnly: true })
-                return res.status(200).json({ token })
-            } else {
-                //El token existe, asi que lo valido
-                console.log("Pase?")
-                const token = req.cookies.jwt;
-                jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
-                    if (err) {
-                        // Token no valido
-                        return res.status(401).send("Credenciales no válidas")
-                    } else {
-                        // Token valido
-                        req.user = user
-                        return res.status(200).send("Creedenciales validas")
-                        next()
-                    }
-                })
-            }
-
-        })(req, res, next)
-    } catch (error) {
-        res.status(500).send(`Ocurrio un error en Session, ${error}`)
-    }
+      })(req, res, next)
+   }
+   catch (error) {
+      res.status(500).send(`Error on session, ${error}`)
+   }
 }
-export const registerUser = async (req, res) => {
-    try {
-        const { firstname, lastname, email, password } = req.body
-        const userBDD = await findUserByEmail(email)
 
-        if (userBDD) {
-            res.status(401).send("Usuario ya registrado")
-        } else {
-            const hashPassword = createHash(password)
-            const newUser = await createUser({ firstname, lastname, email, password: hashPassword })
-            console.log(newUser)
-            const token = jwt.sign({ user: { id: newUser._id } }, process.env.JWT_SECRET);
-            res.cookie('jwt', token, { httpOnly: true });
-            res.status(201).json({ token });
-        }
+const registerUser = async (req, res) => {
+   try {
+      const { firstname, lastname, email, password } = req.body
+      const userBDD = await findUserByEmail(email)
+
+      if (userBDD) {
+         res.status(401).send("User already registered")
+      } 
+      else {
+         const hashPassword = createHash(password)
+         const newUser = await createUser({ firstname, lastname, email, password: hashPassword })
+
+         const token = jwt.sign(
+            { user: { id: newUser._id } }, 
+            process.env.JWT_SECRET
+         )
+         
+         // I send the token to the client
+         res.cookie('jwt', token, 
+            { httpOnly: true, secure: false, signed: true, expires: new Date(Date.now() + 3600000) }
+         )
+
+         return res.status(200).json({ token })
+      }
 
 
-    } catch (error) {
-        res.status(500).send(`Ocurrio un error en Registro User, ${error}`)
-    }
+   } catch (error) {
+      res.status(500).send(`Error on register user, ${error}`)
+   }
 
 }
+
+const logoutUser = (req, res) => {
+   try {
+     // Obtengo el token desde la cookie
+     const token = req.signedCookies.jwt
+ 
+     // Si no hay token, envío un error 401
+     if (!token) {
+       return res.status(401).send("No se encontró el token")
+     }
+ 
+     // Elimino la cookie del token
+     res.clearCookie("jwt")
+ 
+     // Envío una respuesta exitosa
+     return res.status(200).send("Logout exitoso")
+   } 
+   catch (error) {
+     // Si ocurre algún error, envío un error 500 con el mensaje del error
+     res.status(500).send(`Error en el logout: ${error}`)
+   }
+}
+
+export { loginUser, registerUser, logoutUser }

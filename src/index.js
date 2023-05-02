@@ -4,7 +4,6 @@ import connectDB from './config/mongoose.js'
 import { Server } from "socket.io"
 import router from './routes/routes.js'
 import cors from 'cors'
-import corsOptions from './config/cors.js'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
 import initializePassport from './config/passport/passport.js'
@@ -19,11 +18,17 @@ app.use(express.json())
 // Connect to MongoDB from external file
 connectDB()
 
-// Define cors options
-app.use(cors(corsOptions))
+app.use(cors({ 
+   origin: process.env.CORS_ORIGIN.split(','),
+   /* credentials: true */
+}))
 
 // Define cookie parser
-app.use(cookieParser(process.env.JWT_SECRET))
+app.use(cookieParser(process.env.JWT_SECRET,  {
+   /* httpOnly: true,
+   secure: false,
+   signed: true */
+}))
 
 // Define passport
 app.use(passport.initialize())

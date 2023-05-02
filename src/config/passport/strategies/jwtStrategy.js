@@ -3,17 +3,16 @@ import { findUserById } from '../../../services/usersServices.js';
 
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.JWT_SECRET,
+    secretOrKey: process.env.JWT_SECRET
     // algorithms: ['HS256']
 }
 
 export const strategyJWT = new JwtStrategy(jwtOptions, async (payload, done) => {
     try {
-        const user = await findUserById(payload._id)
+        const user = await findUserById(payload.user.id)
         if (!user) {
             return done(null, false)
         }
-
         return done(null, user)
 
     } catch (error) {

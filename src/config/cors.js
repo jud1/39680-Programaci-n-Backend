@@ -1,4 +1,4 @@
-const whiteList = ['http://localhost:8000', 'http://localhost:8080', 'chrome-extension://aicmkgpgakddgnaphhhpliifpcfhicfo']
+const whiteList = ['http://localhost:8000', 'http://localhost:8080', 'http://localhost:5173/','chrome-extension://aicmkgpgakddgnaphhhpliifpcfhicfo']
 
 const corsOptions = {
    origin: (origin, callback) => {

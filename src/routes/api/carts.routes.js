@@ -6,7 +6,7 @@ import { postCart, getCartById, getAllCarts, putProductOnCart, deleteProductFrom
 const routerCarts = Router()
 
 /* Error en autentificación de ruta */
-// routerCarts.get('/', passportError('jwt'), authorizationRole('admin'), getAllCarts)
+routerCarts.get('/', passportError('jwt'), authorizationRole('admin'), getAllCarts)
 
 routerCarts.post('/', postCart)
 routerCarts.get('/:id', getCartById)
