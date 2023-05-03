@@ -87,6 +87,22 @@ const registerUser = async (req, res) => {
 
 }
 
+const getSimpleUser = async (req, res) => {
+   try {
+      const simpleUser = {
+         id: req.user.id,
+         firstname: req.user.firstname,
+         lastname: req.user.lastname,
+         avatar: req.user.avatar,
+         email: req.user.email
+      }
+      res.status(200).send(simpleUser)
+   }
+   catch (error) {
+      res.status(500).send('Error creating cart', error)
+   }
+}
+
 const logoutUser = (req, res) => {
    try {
      // Obtengo el token desde la cookie
@@ -109,4 +125,4 @@ const logoutUser = (req, res) => {
    }
 }
 
-export { loginUser, registerUser, logoutUser }
+export { loginUser, registerUser, getSimpleUser, logoutUser }

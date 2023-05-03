@@ -14,7 +14,6 @@ const messagesSchema = new Schema({
    date: { 
       type: Date, 
       default: Date.now(),
-      require: true 
    }
 })
 

@@ -1,0 +1,13 @@
+#navigation {
+   @media (max-width: 959px) {
+      flex-direction: column;
+      margin-top: 2em;
+      >* {
+         >a {
+            min-height: unset;
+            justify-content: start;
+         }
+      }
+   }
+}
+      

@@ -19,6 +19,15 @@ const getCartById = async (req, res) => {
       res.status(500).send('Error creating cart', error)
    }
 }
+const getMyCart = async (req, res) => {
+   try {
+      const cart = await findCart(req.user.id_cart)
+      res.status(200).send(cart)
+   }
+   catch (error) {
+      res.status(500).send('Error creating cart', error)
+   }
+}
 
 const getAllCarts = async (req, res) => {
    try {
@@ -60,4 +69,4 @@ const deleteAllProductsFromCart = async (req, res) => {
    }
 }
 
-export { postCart, getCartById, getAllCarts, putProductOnCart, deleteProductFromCart, deleteAllProductsFromCart }
+export { postCart, getCartById, getMyCart, getAllCarts, putProductOnCart, deleteProductFromCart, deleteAllProductsFromCart }

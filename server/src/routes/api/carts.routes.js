@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { passportError, authorizationRole } from '../../utils/authorization.js'
 
-import { postCart, getCartById, getAllCarts, putProductOnCart, deleteProductFromCart, deleteAllProductsFromCart } from '../../controllers/carts.js'
+import { postCart, getCartById, getMyCart, getAllCarts, putProductOnCart, deleteProductFromCart, deleteAllProductsFromCart } from '../../controllers/carts.js'
 
 const routerCarts = Router()
 
@@ -9,7 +9,8 @@ const routerCarts = Router()
 routerCarts.get('/', passportError('jwt'), authorizationRole('admin'), getAllCarts)
 
 routerCarts.post('/', postCart)
-routerCarts.get('/:id', getCartById)
+routerCarts.get('/my-cart/', passportError('jwt'), getMyCart)
+routerCarts.get('/find/:id', getCartById)
 routerCarts.get('/', getAllCarts)
 routerCarts.put('/:id/product/:pid', putProductOnCart)
 routerCarts.delete('/:id/product/:pid', deleteProductFromCart)
