@@ -13,7 +13,7 @@ const Register = () => {
       const client = Object.fromEntries(formData)
       console.log(client)
 
-      fetch('http://localhost:8000/api/sessions/register', {
+      fetch(`${import.meta.env.VITE_API_URL}/sessions/register`, {
          method: "POST",
          headers: {
             "Content-Type": "application/json"
@@ -23,7 +23,7 @@ const Register = () => {
       })
       .then(response => response.json())
       .then(data => {
-         document.cookie = `token=${data.token};expires=${new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toUTCString()};path=/`
+         document.cookie = `${import.meta.env.VITE_COOKIE_SESSION_NAME}=${data.token};expires=${new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toUTCString()};path=/`
          window.location.href = '/' // WIP SOLUTION, NEEDS TO BE FIXED FOR CONTEXT
          // navigate(-1)
       })

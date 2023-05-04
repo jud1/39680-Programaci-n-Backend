@@ -12,7 +12,7 @@ const Products = () => {
             const response = await fetch(url, {
                headers: {
                   "Content-Type": "application/json",
-                  "Authorization": `Bearer ${Cookies.get("token")}`,
+                  "Authorization": `Bearer ${Cookies.get(import.meta.env.VITE_COOKIE_SESSION_NAME)}`,
                },
                /* credentials: 'include' */
             })
@@ -20,7 +20,6 @@ const Products = () => {
                throw new Error(`Error ${response.status}: ${response.statusText}`)
             }
             const responseData = await response.json()
-            console.log(responseData)
             setData(responseData)
          } catch (error) {
             setError('Connection failed')

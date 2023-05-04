@@ -12,7 +12,7 @@ const Carts = () => {
             const response = await fetch(url, {
                headers: {
                   "Content-Type": "application/json",
-                  "Authorization": `Bearer ${Cookies.get("token")}`,
+                  "Authorization": `Bearer ${Cookies.get(import.meta.env.VITE_COOKIE_SESSION_NAME)}`,
                },
                /* credentials: 'include' */
             })

@@ -7,9 +7,7 @@ import './menu.min.css'
 
 // REDUX
 import { useDispatch, useSelector } from 'react-redux'
-import { setUser } from '../../../store.js'
-import { selectAlert } from '../../../store.js'
-import { selectUser } from "../../../store.js"
+import { setUser, selectAlert, selectUser } from '../../store.js'
 
 const Navbar = () => {
 
@@ -30,7 +28,7 @@ const Navbar = () => {
 
    // Misc
    const activeClassName = "uk-text-warning"
-   const cookieName = 'token'
+   const cookieName = import.meta.env.VITE_COOKIE_SESSION_NAME
    const jwtCookie = Cookies.get(cookieName)
    // const navigate = useNavigate() // [TODO]: Part of fix redux, render, more below
 

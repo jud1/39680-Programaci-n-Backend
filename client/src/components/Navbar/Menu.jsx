@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 const Menu = () => {
 
    const activeClassName = "uk-text-warning"
-   const jwtCookie = Cookies.get('token')
+   const jwtCookie = Cookies.get(import.meta.env.VITE_COOKIE_SESSION_NAME)
 
    return (
       <ul id="navigation" className="uk-navbar-nav uk-link-text">

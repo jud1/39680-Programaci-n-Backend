@@ -19,7 +19,7 @@ const Products = () => {
             setError('Connection failed')
          }
       }
-      fetchData('http://localhost:8000/api/products/paginated')
+      fetchData(`${import.meta.env.VITE_API_URL}/products/paginated`)
    }, [])
 
    if (error) {

@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { useDispatch } from 'react-redux'
-import { showAlert } from "../../../store"
+import { showAlert } from "../../store"
 import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
@@ -18,7 +18,7 @@ const Login = () => {
       // Iterable to simple object
       const client = Object.fromEntries(formData)
 
-      fetch('http://localhost:8000/api/sessions/login', {
+      fetch(`${import.meta.env.VITE_API_URL}/sessions/login`, {
          method: "POST",
          headers: {
             "Content-Type": "application/json"
@@ -30,7 +30,7 @@ const Login = () => {
       .then(data => {
          
          // Create cookie via react (need to be Express)
-         document.cookie = `token=${data.token};expires=${new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toUTCString()};path=/`
+         document.cookie = `${import.meta.env.VITE_COOKIE_SESSION_NAME}=${data.token};expires=${new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toUTCString()};path=/`
          
          // Dispatch redux alert
          dispatch(showAlert("User data loaded!"))
