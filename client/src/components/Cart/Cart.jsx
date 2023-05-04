@@ -31,7 +31,7 @@ const Products = () => {
    if (error) {
       return (
          <div className="uk-container">
-            <div className="uk-alert-danger" uk-alert="">
+            <div className="uk-alert-warning" data-uk-alert="">
                <p>{error}</p>
             </div>
          </div>
@@ -41,7 +41,7 @@ const Products = () => {
    if (!data) {
       return(
          <div className="uk-container">
-            <div className="uk-alert-primary" uk-alert="">
+            <div className="uk-alert-primary" data-uk-alert="">
                <p>Loading...</p>
             </div>
          </div>
@@ -51,7 +51,7 @@ const Products = () => {
    if (data.products.length<1) {
       return(
          <div className="uk-container">
-            <div className="uk-alert-primary" uk-alert="">
+            <div className="uk-alert-primary" data-uk-alert="">
                <p>Empty cart</p>
             </div>
          </div>

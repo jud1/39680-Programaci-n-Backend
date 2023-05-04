@@ -1,17 +1,13 @@
-import { useState } from 'react'
 import { NavLink } from "react-router-dom"
 import Cookies from 'js-cookie'
-import './navigation.min.css'
 
-const Navigation = () => {
+const Menu = () => {
+
    const activeClassName = "uk-text-warning"
    const jwtCookie = Cookies.get('token')
 
    return (
       <ul id="navigation" className="uk-navbar-nav uk-link-text">
-         <NavLink to={'/carts'} className={({ isActive }) => isActive ? activeClassName : undefined}>
-            <span>Carts</span>
-         </NavLink>
          {! jwtCookie &&
             <>
                <NavLink to={`/login`} className={({ isActive }) => isActive ? activeClassName : undefined}>
@@ -28,4 +24,4 @@ const Navigation = () => {
    )
 }
 
-export default Navigation
+export default Menu
