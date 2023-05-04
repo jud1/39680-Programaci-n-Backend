@@ -21,7 +21,7 @@ const Navigation = () => {
          )}
          {! jwtCookie &&
             <>
-               <NavLink to={`/login`} className={({ isActive }) => isActive ? activeClassName : undefined} >
+               <NavLink to={`/login`} className={({ isActive }) => isActive ? activeClassName : undefined}>
                   <span>Login</span>
                   <span data-uk-icon="icon: sign-in"></span>
                </NavLink>

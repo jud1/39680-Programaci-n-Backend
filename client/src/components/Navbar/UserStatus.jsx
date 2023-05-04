@@ -15,28 +15,21 @@ const UserStatus = () => {
 
    // REDUX
    const dispatch = useDispatch()
-   const alertMessage = useSelector(selectAlert);
-   const [isLoading, setIsLoading] = useState(false);
+   const alertMessage = useSelector(selectAlert)
+   const [isLoading, setIsLoading] = useState(false)
 
    const user = useSelector(selectUser);
-   console.log(user.id)
 
    const handleLogout = () => {
       Cookies.remove(cookieName)
-      dispatch(setUser({
-         id: null,
-         firstname: null,
-         lastname: null,
-         avatar: null,
-         email: null
-      }))
+      dispatch(setUser({ id: null, firstname: null, lastname: null, avatar: null, email: null }))
       navigate('/')
    }
 
    useEffect(() => {
 
       if (alertMessage) {
-         setIsLoading(true);
+         setIsLoading(true)
          fetch(`${import.meta.env.VITE_API_URL}/sessions/usersimple`,
             { 
                headers: {
@@ -57,10 +50,10 @@ const UserStatus = () => {
          })
          .catch(error => {
             console.log(error);
-            setIsLoading(false);
+            setIsLoading(false)
          })
       }
-   }, [alertMessage]);
+   }, [alertMessage])
 
    
 
@@ -98,7 +91,7 @@ const UserStatus = () => {
             : <></>
          }
       </div>
-   );
-};
+   )
+}
 
-export default UserStatus;
+export default UserStatus
