@@ -1,13 +1,14 @@
 import { useRef } from "react"
-import { useDispatch } from 'react-redux'
-import { showAlert } from "../../store"
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../../store.js'
+import fetchCookie from "../../utils/fetchCookie.js"
 
 const Login = () => {
 
    const datForm = useRef()
-   const dispatch = useDispatch()
    const navigate = useNavigate()
+   const dispatch = useDispatch()
 
    const consultForm = evt => {
       evt.preventDefault()
@@ -24,19 +25,24 @@ const Login = () => {
             "Content-Type": "application/json"
          },
          body: JSON.stringify(client),
-         /* credentials: 'include' */ // WIP SOLUTION, NEEDS TO BE FIXED FOR SERVER CREATE COOKIE
+         /* credentials: 'include' */ // [TODO] WIP SOLUTION, NEEDS TO BE FIXED FOR SERVER CREATE COOKIE
       })
       .then(response => response.json())
-      .then(data => {
+      .then(async data => {
          
-         // Create cookie via react (need to be Express)
+         // [TODO] Create cookie via react (need to be Express) 
          document.cookie = `${import.meta.env.VITE_COOKIE_SESSION_NAME}=${data.token};expires=${new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toUTCString()};path=/`
          
-         // Dispatch redux alert
-         dispatch(showAlert("User data loaded!"))
+         // Fetch simple user data
+         const user = await fetchCookie()
 
-         // window.location.href = '/' // WIP SOLUTION, NEEDS TO BE FIXED FOR CONTEXT
-         navigate(-1)
+         console.log(user)
+
+         // Dispatch redux alert
+         dispatch(setUser(user))
+         
+         // Final navigate
+         navigate('/')
       })
      .catch(error => console.log(error))
    }

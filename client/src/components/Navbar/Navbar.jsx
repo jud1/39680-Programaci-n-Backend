@@ -6,8 +6,8 @@ import Menu from './Menu'
 import './menu.min.css'
 
 // REDUX
-import { useDispatch, useSelector } from 'react-redux'
-import { setUser, selectAlert, selectUser } from '../../store.js'
+import { useSelector } from 'react-redux'
+import { selectUser } from '../../store.js'
 
 const Navbar = () => {
 
@@ -26,55 +26,21 @@ const Navbar = () => {
       return () => window.removeEventListener('resize', handleResize)
    }, [])
 
+   // Data from REDUX
+   const user = useSelector(selectUser)
+
    // Misc
+   const navigate = useNavigate() // [TODO]: Part of fix redux, render, more below
    const activeClassName = "uk-text-warning"
    const cookieName = import.meta.env.VITE_COOKIE_SESSION_NAME
    const jwtCookie = Cookies.get(cookieName)
-   // const navigate = useNavigate() // [TODO]: Part of fix redux, render, more below
 
    // REDUX
-   const dispatch = useDispatch()
-   const alertMessage = useSelector(selectAlert)
-   const [isLoading, setIsLoading] = useState(false)
-   const user = useSelector(selectUser)
-
    const handleLogout = () => {
-      dispatch(setUser({ id: null, firstname: null, lastname: null, avatar: null, email: null }))
+      dispatch(setUser(null))
       Cookies.remove(cookieName)
-      
-      // navigate('/') // [TODO]: to be fixed (bug need reload)
-      window.location.reload()
+      navigate('/')
    }
-
-   useEffect(() => {
-
-      if (alertMessage && Cookies.get(cookieName)) {
-         setIsLoading(true)
-         fetch(`${import.meta.env.VITE_API_URL}/sessions/usersimple`,
-            { 
-               headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": `Bearer ${jwtCookie}`,
-               }
-            }
-         )
-         .then(response => {
-            if (!response.ok) {
-               throw new Error("Token not valid")
-            }
-            return response.json()
-         })
-         .then(data => {
-            dispatch(setUser(data))
-            setIsLoading(false)
-         })
-         .catch(error => {
-            console.log(error);
-            setIsLoading(false)
-         })
-      }
-   }, [alertMessage])
-
 
    return (
       <nav className="uk-navbar-container">
@@ -89,16 +55,16 @@ const Navbar = () => {
                   </Link> 
                   {/* USER MENU (conditional) */} 
                   <div> {/* [TODO]: Pass this entire div on a componente */}
-                     { user.id !== null 
+                     { user.data !== null 
                         ? <>
-                           <button className="uk-button uk-button-default" type="button">
-                              <span data-uk-icon="user"></span>
-                           </button>
+                           <a href="#">
+                              <img className="uk-border-circle" width="40" height="40" src={user.data.avatar} alt="Avatar" />
+                           </a>
                            <div uk-dropdown="mode: click">
                               <ul className="uk-nav uk-dropdown-nav">
                                  <li className="uk-margin-small-bottom">
                                     <span>
-                                       Hola <strong className="uk-text-uppercase">{user.firstname}</strong> !
+                                       Hola <strong className="uk-text-uppercase">{user.data.firstname}</strong> !
                                     </span>
                                  </li>
                                  <li className="uk-nav-divider"></li>

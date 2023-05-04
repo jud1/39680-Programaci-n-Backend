@@ -24,8 +24,7 @@ const Register = () => {
       .then(response => response.json())
       .then(data => {
          document.cookie = `${import.meta.env.VITE_COOKIE_SESSION_NAME}=${data.token};expires=${new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toUTCString()};path=/`
-         window.location.href = '/' // WIP SOLUTION, NEEDS TO BE FIXED FOR CONTEXT
-         // navigate(-1)
+         navigate(-1)
       })
       .catch(error => console.log(error))
    }
