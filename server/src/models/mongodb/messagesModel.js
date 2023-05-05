@@ -6,6 +6,11 @@ const messagesSchema = new Schema({
       ref: "Users",
       required: true
    },
+   user_email: { 
+      type: Schema.Types.String,
+      ref: "Users",
+      required: true
+   },
    message: { 
       type: String, 
       require: true, 

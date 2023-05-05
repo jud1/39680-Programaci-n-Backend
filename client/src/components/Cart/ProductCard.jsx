@@ -1,13 +1,11 @@
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { selectUser } from '../../store.js'
-import Cookies from 'js-cookie'
 import Button from '../Button/Button'
+import Cookies from 'js-cookie'
 
-const ProductCard = (props) => {
-   // get data from redux (if exist) and show button add cart below
-   const user = useSelector(selectUser)
+const ProductCard = ({props}) => {
    const navigate = useNavigate()
+   const quantity = props.quantity
+   const { name, description, price, sku, status, stock, category, _id } = props.product
 
    const fetchProductAction = async (pid, url, method) => {
       try {
@@ -24,20 +22,17 @@ const ProductCard = (props) => {
                Error ${response.status}: ${response.statusText}
             `)
          }
-         
       }
       catch (error) {
-         console.log('Error add to cart')
+         console.log('Error remove to cart')
       }
    }
 
-   const handleAddProduct = async evt => {
+   const handleRemoveProduct = async evt => {
       evt.preventDefault()
-      await fetchProductAction(props.props._id, '/carts/addproduct/', 'PUT')
-      navigate('/cart')
+      await fetchProductAction(_id, '/carts/removeproduct/', 'DELETE')
+      navigate(0)
    }
-
-   const { name, description, price, sku, status, stock, category } = props.props
 
    return (
       <div className="uk-card uk-card-default">
@@ -54,20 +49,20 @@ const ProductCard = (props) => {
                </div>
             </div>
          </div>
-         <div className="uk-card-body">
-
+         <div className="uk-card-body" data-uk-margin="margin: uk-margin-small-top uk-margin-remove-bottom">
+            <h5 className="uk-margin-remove-bottom">
+               Quantity: {quantity}
+            </h5>
             <h5>${price}</h5>
             <p>{description}</p>
          </div>
-         { user.data && 
-            <div className="uk-card-footer">
-               <ul className='uk-grid-small uk-width-auto' data-uk-grid="">
-                  <li>
-                     <Button style='primary' onClick={handleAddProduct}>+ <span data-uk-icon="cart"></span></Button>
-                  </li>
-               </ul>
-            </div>
-         }
+         <div className="uk-card-footer">
+            <ul className='uk-grid-small uk-width-auto' data-uk-grid="">
+               <li>
+                  <Button style='secondary' onClick={handleRemoveProduct}>Remove</Button>
+               </li>
+            </ul>
+         </div>
       </div>
    )
 }

@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, NavLink } from "react-router-dom"
+// REDUX
+import { selectUser } from '../../store.js'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUser, clearUser } from '../../store.js'
 import Logo from '../Logo/Logo'
 import Cookies from 'js-cookie'
 import Menu from './Menu'
 import './menu.min.css'
 
-// REDUX
-import { useSelector } from 'react-redux'
-import { selectUser } from '../../store.js'
 
 const Navbar = () => {
 
@@ -28,6 +29,7 @@ const Navbar = () => {
 
    // Data from REDUX
    const user = useSelector(selectUser)
+   const dispatch = useDispatch()
 
    // Misc
    const navigate = useNavigate() // [TODO]: Part of fix redux, render, more below
@@ -37,7 +39,7 @@ const Navbar = () => {
 
    // REDUX
    const handleLogout = () => {
-      dispatch(setUser(null))
+      dispatch(clearUser())
       Cookies.remove(cookieName)
       navigate('/')
    }

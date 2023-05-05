@@ -4,5 +4,15 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"workbench.colorCustomizations": {
+			"sash.hoverBorder": "#942eb6",
+			"statusBar.background": "#73248d",
+			"statusBar.foreground": "#e7e7e7",
+			"statusBarItem.hoverBackground": "#942eb6",
+			"statusBarItem.remoteBackground": "#73248d",
+			"statusBarItem.remoteForeground": "#e7e7e7"
+		},
+		"peacock.color": "#73248d"
+	}
 }

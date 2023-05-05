@@ -29,6 +29,8 @@ const Carts = () => {
       fetchData(`${import.meta.env.VITE_API_URL}/carts`)
    }, [])
 
+   console.log(data)
+
    return (
       <div className="uk-container">
          <h1>All Carts <small>(admin view)</small></h1>
@@ -44,17 +46,18 @@ const Carts = () => {
                {data.map((item) => (
                   <li key={item._id}>
                      <div className="uk-card uk-card-default uk-card-body">
-                        <Link to={`/cart/${item._id}`}>
-                           <div className="uk-card-badge uk-label">{item._id}</div>
-                        </Link>
+                        <div className="uk-card-badge uk-label">{item._id}</div>
+                        {/* <Link to={`/cart/${item._id}`}>
+                        </Link> */}
                         {item.products.length > 0 
                            ? <ul className='uk-list'>
-                              {item.products.map((product) =>
-                                 <li key={product._id}>
-                                    <small>Quantity: {product.quantity}</small>
-                                    <Link to={`/products/${product._id}`}>
-                                       <span className='uk-display-block'>{product._id}</span>
-                                    </Link>
+                              {item.products.map( item =>
+                                 <li key={item._id} data-uk-margin='margin: uk-margin-remove'>
+                                    <small>Quantity: {item.quantity}</small>
+                                    {/* <Link to={`/products/${product._id}`}>
+                                    </Link> */}
+                                    <h5 className='uk-display-block uk-text-bold'>{item.product.name}</h5>
+                                    <span className='uk-display-block'>id: {item._id}</span>
                                  </li>
                               )}
                            </ul>

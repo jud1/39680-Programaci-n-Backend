@@ -5,6 +5,7 @@ const Products = () => {
    const [data, setData] = useState(null)
    const [error, setError] = useState(null)
 
+
    useEffect(() => {
       const fetchData = async url => {
          try {

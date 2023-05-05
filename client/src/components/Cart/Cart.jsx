@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import ProductCard from "../Products/ProductCard"
+import ProductCard from "./ProductCard"
 import Cookies from 'js-cookie'
 
 const Products = () => {
@@ -27,6 +27,7 @@ const Products = () => {
       }
       fetchData(`${import.meta.env.VITE_API_URL}/carts/my-cart/`)
    }, [])
+
    if (error) {
       return (
          <div className="uk-container">
@@ -59,12 +60,11 @@ const Products = () => {
 
    return (
       <div className="uk-container">
-         <h1>Products</h1>
+         <h1>Cart</h1>
          <ul className="uk-margin-medium-top uk-child-width-1-3 uk-grid-small" uk-grid="">
             {data.products.map((item) => (
-
                <li key={item.product._id}>
-                  <ProductCard props={item.product} />
+                  <ProductCard props={item} />
                </li>
             ))}
          </ul>

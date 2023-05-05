@@ -1,4 +1,4 @@
-import { createCart, findCart, findCarts, addProduct, removeProductOnCart, emptyCart } from '../services/cartsServices.js'
+import { createCart, findCart, findCarts, addProduct, removeProduct, emptyCart } from '../services/cartsServices.js'
 
 const postCart = async (req, res) => {
    try {
@@ -19,6 +19,7 @@ const getCartById = async (req, res) => {
       res.status(500).send('Error creating cart', error)
    }
 }
+
 const getMyCart = async (req, res) => {
    try {
       const cart = await findCart(req.user.id_cart)
@@ -49,9 +50,32 @@ const putProductOnCart = async (req, res) => {
    }
 }
 
+const addProductOnCart = async (req, res) => {
+   try {
+      const updatedCart = await addProduct(req.user.id_cart, req.body.pid)
+      res.status(200).send(updatedCart)
+   }
+   catch (error) {
+      res.status(500).send('Error creating cart', error)
+   }
+}
+
+const removeProductCart = async (req, res) => {
+   try {
+      console.log(req.user.id_cart)
+      console.log(req.body.pid)
+      const updatedCart = await removeProduct(req.user.id_cart, req.body.pid)
+      console.log(updatedCart)
+      res.status(200).send(updatedCart)
+   }
+   catch (error) {
+      res.status(500).send('Error creating cart')
+   }
+}
+
 const deleteProductFromCart = async (req, res) => {
    try {
-      const updatedCart = await removeProductOnCart(req.params.id, req.params.pid)
+      const updatedCart = await removeProduct(req.params.id, req.params.pid)
       res.status(200).send(updatedCart)
    }
    catch (error) {
@@ -69,4 +93,4 @@ const deleteAllProductsFromCart = async (req, res) => {
    }
 }
 
-export { postCart, getCartById, getMyCart, getAllCarts, putProductOnCart, deleteProductFromCart, deleteAllProductsFromCart }
+export { postCart, getCartById, getMyCart, getAllCarts, putProductOnCart, addProductOnCart, deleteProductFromCart, removeProductCart, deleteAllProductsFromCart }

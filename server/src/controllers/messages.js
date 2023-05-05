@@ -12,12 +12,15 @@ const getMessages = async(req, res) => {
 
 const postMessage = async(req, res) => {
    try {
-      const { message, user } = req.body
-      const newProduct = await createMessage({ message, user_id: user })
-      res.status(200).send(newProduct)
+      const message = req.body.message
+      const { id: user_id, email: user_email } = req.user
+      await createMessage({ message, user_id, user_email })
+      const allMessages = await findMessages() 
+      res.status(200).send(allMessages)
    }
    catch(error) {
-      res.status(500).send('Error posting message', error)
+      console.error('Error posting message', error)
+      res.status(500).send('Error posting message')
    }
 }
 

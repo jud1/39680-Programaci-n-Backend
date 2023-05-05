@@ -29,9 +29,15 @@ const findCart = async id => {
 
 const findCarts = async () => {
    try {
-      const carts = await cartsModel.find()
-      return carts
-   }
+      const carts = await cartsModel.find();
+      const populatedCarts = await Promise.all(
+         carts.map(async cart => {
+            const populatedCart = await cart.populate('products.product')
+            return populatedCart
+         })
+      )
+      return populatedCarts
+   } 
    catch (error) {
       return error
    }
@@ -58,7 +64,7 @@ const addProduct = async (id, product) => {
    }
 }
 
-const removeProductOnCart = async (id, product) => {
+const removeProduct = async (id, product) => {
    try {
       const cart = await cartsModel.findById(id)
 
@@ -90,4 +96,4 @@ const emptyCart = async id => {
 }
 
 
-export { createCart, findCart, findCarts, addProduct, removeProductOnCart, emptyCart }
+export { createCart, findCart, findCarts, addProduct, removeProduct, emptyCart }
