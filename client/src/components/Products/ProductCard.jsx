@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../store.js'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Cookies from 'js-cookie'
 import Button from '../Button/Button'
 
@@ -20,26 +23,26 @@ const ProductCard = (props) => {
             body: JSON.stringify({pid: pid}),
          })
          if (!response.ok) {
-            throw new Error (`
-               Error ${response.status}: ${response.statusText}
-            `)
+            throw new Error (response.status)
          }
-         
       }
-      catch (error) {
-         console.log('Error add to cart')
+      catch (error) { 
+         return error 
       }
    }
 
    const handleAddProduct = async evt => {
       evt.preventDefault()
-      await fetchProductAction(props.props._id, '/carts/addproduct/', 'PUT')
-      navigate('/cart')
+      const addProduct = await fetchProductAction(props.props._id, '/carts/addproduct/', 'PUT')
+      addProduct == 'Error: 500' ? 
+         toast.error("Error adding to cart!", { position: toast.POSITION.BOTTOM_CENTER })
+      : navigate('/cart')
    }
 
    const { name, description, price, sku, status, stock, category } = props.props
 
    return (
+
       <div className="uk-card uk-card-default">
          <div className="uk-card-header">
             <div className="uk-grid-small uk-flex-middle" uk-grid="">

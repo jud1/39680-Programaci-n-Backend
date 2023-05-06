@@ -9,13 +9,15 @@ const routerCarts = Router()
 routerCarts.get('/', passportError('jwt'), authorizationRole('admin'), getAllCarts)
 
 routerCarts.post('/', postCart)
-routerCarts.get('/my-cart/', passportError('jwt'), getMyCart)
-routerCarts.get('/find/:id', getCartById)
 routerCarts.get('/', getAllCarts)
-routerCarts.put('/:id/product/:pid', putProductOnCart)
-routerCarts.delete('/:id/product/:pid', passportError('jwt'), deleteProductFromCart)
+routerCarts.get('/cart/:id', getCartById)
+routerCarts.get('/mycart/', passportError('jwt'), getMyCart)
 routerCarts.put('/addproduct/', passportError('jwt'), addProductOnCart)
 routerCarts.delete('/removeproduct/', passportError('jwt'), removeProductCart)
 routerCarts.put('/:id', passportError('jwt'), deleteAllProductsFromCart)
+
+// Old version only postman
+routerCarts.put('/:id/product/:pid', putProductOnCart)
+routerCarts.delete('/:id/product/:pid', deleteProductFromCart)
 
 export default routerCarts

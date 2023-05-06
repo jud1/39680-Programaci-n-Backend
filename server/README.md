@@ -15,7 +15,7 @@ A Node.js Express project for a e-commerce
 
 ### Executing program
 
-`npm install` & `npm start`
+`npm install` & `npm run dev`
 
 
 ## Authors

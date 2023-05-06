@@ -53,10 +53,11 @@ const putProductOnCart = async (req, res) => {
 const addProductOnCart = async (req, res) => {
    try {
       const updatedCart = await addProduct(req.user.id_cart, req.body.pid)
+      if(updatedCart.name === 'Error') throw new Error(updatedCart.message)
       res.status(200).send(updatedCart)
    }
    catch (error) {
-      res.status(500).send('Error creating cart', error)
+      res.status(500).send(error)
    }
 }
 

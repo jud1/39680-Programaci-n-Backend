@@ -22,6 +22,7 @@ const ProductCard = ({props}) => {
                Error ${response.status}: ${response.statusText}
             `)
          }
+         console.log(response)
       }
       catch (error) {
          console.log('Error remove to cart')

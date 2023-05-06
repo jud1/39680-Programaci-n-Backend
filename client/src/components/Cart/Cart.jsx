@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import ProductCard from "./ProductCard"
 import Cookies from 'js-cookie'
+import Button from "../Button/Button"
 
 const Products = () => {
    const [data, setData] = useState(null)
@@ -25,8 +26,12 @@ const Products = () => {
             setError('Connection failed')
          }
       }
-      fetchData(`${import.meta.env.VITE_API_URL}/carts/my-cart/`)
+      fetchData(`${import.meta.env.VITE_API_URL}/carts/mycart`)
    }, [])
+
+   const purcharce = async () => {
+      console.log('purcharce')
+   }
 
    if (error) {
       return (
@@ -60,6 +65,7 @@ const Products = () => {
 
    return (
       <div className="uk-container">
+         <Button onClick={purcharce}>Comprar</Button>
          <h1>Cart</h1>
          <ul className="uk-margin-medium-top uk-child-width-1-3 uk-grid-small" uk-grid="">
             {data.products.map((item) => (

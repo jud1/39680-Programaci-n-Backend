@@ -1,8 +1,11 @@
 // Dinamic import (DAO)
 const path = process.env.SELECTEDBD === '1' ? '../models/mongodb/cartsModel.js' : '../models/sequelize/cartsModel.js'
-
 const importedModule = await import(path)
 const cartsModel = importedModule.default
+
+const pathProducts = process.env.SELECTEDBD === '1' ? '../models/mongodb/productsModel.js' : '../models/sequelize/productsModel.js'
+const importedModuleProducts = await import(pathProducts)
+const productsModel = importedModuleProducts.default
 
 // Create one
 const createCart = async () => {
@@ -46,13 +49,20 @@ const findCarts = async () => {
 const addProduct = async (id, product) => {
    try {
       const cart = await cartsModel.findById(id)
-      const exixstingProduct = cart.products.some(item=>item.product.toString()===product)
+      const exixstingProduct = cart.products.some(item=>item.product.toString() === product )
+      const productLiteral = await productsModel.findById(product)
 
       // Doesn't exist
-      if(!exixstingProduct) cart.products.push({product, quantity: 1})
+      if(!exixstingProduct) cart.products.push({ product, quantity: 1 })
       
       // Exists, add quantity
-      else cart.products.map(item => item.product.toString()===product ? item.quantity++ : false)
+      else cart.products.map(item => item.product.toString() === product ? item.quantity++ : false)
+
+      // If the quantity amount overpass the stock
+      if ( ( cart.products.find(item => item.product.toString() === product) ).quantity > productLiteral.stock ) {
+         // EXIT RETURN [only IF]
+         throw new Error('The quantity amount overpass the stock')
+      }
       
       await cartsModel.findByIdAndUpdate(id, cart)
       const updatedCart = await cartsModel.findById(id)
