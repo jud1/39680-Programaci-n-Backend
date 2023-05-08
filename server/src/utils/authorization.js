@@ -1,7 +1,7 @@
 import passport from "passport"
 
 // General function to return error in to strategy of passport
-const passportError = (strategy) => {
+const current = (strategy) => {
    return async (req, res, next) => {
       passport.authenticate(strategy, (error, user, info) => {
          if (error) {
@@ -32,4 +32,4 @@ const authorizationRole = (role) => {
    }
 }
 
-export { passportError, authorizationRole }
+export { current, authorizationRole }

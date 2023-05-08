@@ -1,4 +1,5 @@
 import { findCart, emptyCart } from "./cartsServices.js"
+import { modifyProduct } from "./productsServices.js"
 import nodemailer from 'nodemailer'
 
 // Dinamic import (DAO)
@@ -51,16 +52,21 @@ const createOrder = async (user) => {
          }
       })
 
-
       const amount = cart.products.reduce((acc, item) => acc + item.quantity * item.product.price, 0)
       const order = { purchaser, resume, amount, exceptions }
 
       // Create order
       const neworder = new ordersModel(order)
       await neworder.save()
+      
+      // update stock on products purchased
+      cart.products.forEach(async item => {
+         const newStock = item.product.stock - item.quantity
+         await modifyProduct(item.product.id, {stock: newStock})
+      })
 
       // Empty cart
-      // emptyCart(user.id_cart.toString())
+      emptyCart(user.id_cart.toString())
 
       // Node mailer, resumen de la compra [AWAIT]
       const transporter = nodemailer.createTransport({
@@ -72,7 +78,7 @@ const createOrder = async (user) => {
          }
       })
 
-      await transporter.sendMail({
+      /* await transporter.sendMail({
          from: process.env.GMAILSENDERUSER,
          to: user.email,
          subject: 'Order resume',
@@ -83,7 +89,7 @@ const createOrder = async (user) => {
             <p>Order status: ${neworder.status}</p>
             <p>Order date: ${neworder.date}</p>
          `
-      })
+      }) */
 
       // Return order
       return neworder
