@@ -2,13 +2,7 @@ import { createOrder, findOrder, updateOrder } from "../services/orders.service.
 
 const postOrder = async (req, res) => {
    try {
-      const testParams = {
-         purchaser: 'Name Test',
-         resume: ['a', 'b', 'c'],
-         amount: 100
-      } 
-      const newOrder = await createOrder(testParams)
-
+      const newOrder = await createOrder(req.user)
       res.status(200).send(newOrder)
    }
    catch (error) {
@@ -28,7 +22,7 @@ const getOrder = async (req, res) => {
 
 const putOrder = async (req, res) => {
    try {
-      const switcher = 1
+      const switcher = 0
       const testParams = {
          status: switcher === 1 ? 'created' : 'cancelled',
       } 

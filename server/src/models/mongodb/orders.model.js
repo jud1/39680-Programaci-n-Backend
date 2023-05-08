@@ -43,6 +43,19 @@ const ordersSchema = new Schema({
       default: [
          { status: initialStatus, date: Date.now() }
       ]
+   },
+   exceptions: {
+      type: [
+         {
+            message: {
+               type: String,
+            },
+            product: { 
+               type: String 
+            }
+         }
+      ],
+      default: []
    }
 })
 

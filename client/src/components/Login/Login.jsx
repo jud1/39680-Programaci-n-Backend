@@ -36,8 +36,6 @@ const Login = () => {
          // Fetch simple user data
          const user = await fetchCookie()
 
-         console.log(user)
-
          // Dispatch redux alert
          dispatch(setUser(user))
          

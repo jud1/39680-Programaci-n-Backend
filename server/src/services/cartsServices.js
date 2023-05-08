@@ -19,11 +19,16 @@ const createCart = async () => {
    }
 }
 
-const findCart = async id => {
+const findCart = async (id, isPopulate=true) => {
    try {
       const cart = await cartsModel.findById(id)
-      const cartPopulate = await cart.populate('products.product')
-      return cartPopulate
+      if (isPopulate) {
+         const cartPopulate = await cart.populate('products.product')
+         return cartPopulate
+      }
+      else {
+         return cart
+      }
    }
    catch (error) {
       return error

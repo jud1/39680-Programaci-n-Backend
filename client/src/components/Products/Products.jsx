@@ -14,8 +14,8 @@ const Products = () => {
                throw new Error("Network response was not ok")
             }
             const responseData = await response.json()
-            // console.log(responseData)
             setData(responseData)
+            
          } catch (error) {
             setError('Connection failed')
          }

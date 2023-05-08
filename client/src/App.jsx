@@ -13,6 +13,7 @@ import Register from "./components/Register/Register"
 import Cart from "./components/Cart/Cart"
 import Messages from "./components/Messages/Messages"
 import ReduxCookieContainer from "./components/ReduxCookieContainer/ReduxCookieContainer"
+import Order from "./components/Order/Order";
 
 function App() {
    const handleClick = () => {
@@ -33,6 +34,7 @@ function App() {
                         <Route exact path="/register" element={<Register />}/>
                         <Route exact path="/cart" element={<Cart />}/>
                         <Route exact path="/messages" element={<Messages />}/>
+                        <Route exact path="/order/:id" element={<Order/>}/>
                      </Routes>
                   </Main>
                   <Footer />
