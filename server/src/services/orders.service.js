@@ -59,37 +59,44 @@ const createOrder = async (user) => {
       const neworder = new ordersModel(order)
       await neworder.save()
       
-      // update stock on products purchased
-      cart.products.forEach(async item => {
-         const newStock = item.product.stock - item.quantity
-         await modifyProduct(item.product.id, {stock: newStock})
-      })
+      console.log(process.env.NOEMAILONTEST)
 
-      // Empty cart
-      emptyCart(user.id_cart.toString())
+      // IF var on env is not 1, send email (for dev purposes)
+      if(process.env.NOEMAILONTEST !== '1') {
+         
+         // Update stock on products purchased
+         cart.products.forEach(async item => {
+            const newStock = item.product.stock - item.quantity
+            await modifyProduct(item.product.id, {stock: newStock})
+         })
 
-      // Node mailer, resumen de la compra [AWAIT]
-      const transporter = nodemailer.createTransport({
-         service: 'gmail',
-         port: 587,
-         auth: {
-            user: process.env.GMAILSENDERUSER,
-            pass: process.env.GMAILSENDERPASS
-         }
-      })
+         // Empty cart
+         emptyCart(user.id_cart.toString())
+         
+         // Nodemailer: options
+         const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            port: 587,
+            auth: {
+               user: process.env.GMAILSENDERUSER,
+               pass: process.env.GMAILSENDERPASS
+            }
+         })
 
-      /* await transporter.sendMail({
-         from: process.env.GMAILSENDERUSER,
-         to: user.email,
-         subject: 'Order resume',
-         html: `
-            <h1>Order resume</h1>
-            <p>Order ID: ${neworder.code}</p>
-            <p>Order amount: ${neworder.amount}</p>
-            <p>Order status: ${neworder.status}</p>
-            <p>Order date: ${neworder.date}</p>
-         `
-      }) */
+         // Nodemailer: send
+         await transporter.sendMail({
+            from: process.env.GMAILSENDERUSER,
+            to: user.email,
+            subject: 'Order resume',
+            html: `
+               <h1>Order resume</h1>
+               <p>Order ID: ${neworder.code}</p>
+               <p>Order amount: ${neworder.amount}</p>
+               <p>Order status: ${neworder.status}</p>
+               <p>Order date: ${neworder.date}</p>
+            `
+         })
+      }
 
       // Return order
       return neworder
@@ -114,7 +121,6 @@ const updateOrder = async (id, modify) => {
       const updateOrder = await ordersModel.findByIdAndUpdate(id, modify, { new: true })
 
       // Node mailer, aviso de cambio de status [AWAIT]
-
       return updateOrder
    }
    catch (error) {
